@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sicherheits-Tools (Passwort · Verschlüsselung · Prüfsummen) | Lotus IT-Services</title>
+    <meta name="description" content="Sichere Passwörter generieren, Texte clientseitig verschlüsseln und Datei-Prüfsummen berechnen — alles direkt im Browser, ohne Server-Call.">
+    <meta name="keywords" content="Passwort-Generator, Verschlüsselung, Prüfsumme, Browser-Tool, Sicherheit, AES, SHA-256">
+    <link rel="canonical" href="https://www.lotus-it.de/generator.html" />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.lotus-it.de/generator.html" />
+    <meta property="og:title" content="Sicherheits-Tools (Passwort · Verschlüsselung · Prüfsummen) | Lotus IT-Services" />
+    <meta property="og:description" content="Sichere Passwörter generieren, Texte clientseitig verschlüsseln und Datei-Prüfsummen berechnen — alles direkt im Browser, ohne Server-Call." />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:site_name" content="Lotus IT-Services" />
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:title" content="Sicherheits-Tools (Passwort · Verschlüsselung · Prüfsummen) | Lotus IT-Services" />
+    <meta property="twitter:description" content="Sichere Passwörter generieren, Texte clientseitig verschlüsseln und Datei-Prüfsummen berechnen — alles direkt im Browser, ohne Server-Call." />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Sicherheits-Tools",
+      "description": "Sichere Passwörter generieren, Texte verschlüsseln und Prüfsummen berechnen",
+      "url": "https://www.lotus-it.de/generator.html",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web Browser",
+      "provider": {
+        "@type": "Organization",
+        "name": "Lotus IT-Services"
+      }
+    }
+    </script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="fonts/fonts.css">
+    <style>
+        .generator-container {
+            max-width: 640px;
+            margin: 40px auto;
+            padding: 24px;
+            background: #f4f4f4;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .generator-container h1 {
+            text-align: center;
+            color: #333;
+            font-size: 1.4rem;
+            margin: 0 0 6px;
+        }
+
+        .tool-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 0.82rem;
+            margin-bottom: 20px;
+        }
+
+        /* ============ Tab Navigation ============ */
+        .tab-nav {
+            display: flex;
+            gap: 2px;
+            border-bottom: 2px solid #ddd;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: fit-content;
+            padding: 10px 14px;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            color: #666;
+            font-family: inherit;
+            transition: color 0.2s, border-color 0.2s;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover { color: #007bff; }
+
+        .tab-btn.active {
+            color: #007bff;
+            border-bottom-color: #007bff;
+            font-weight: 600;
+        }
+
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        /* ============ Common ============ */
+        .result-container {
+            background: #fff;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 1.2rem;
+            text-align: center;
+            border: 1px solid #ddd;
+            min-height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .strength-wrapper { margin-bottom: 15px; }
+        .strength-track {
+            height: 6px;
+            background: #ddd;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 4px;
+        }
+        .strength-bar {
+            height: 100%;
+            width: 0%;
+            border-radius: 3px;
+            transition: width 0.3s, background-color 0.3s;
+        }
+        .strength-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .setting {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        .btn:hover { background-color: #0056b3; }
+        .btn:disabled { background-color: #aaa; cursor: not-allowed; }
+
+        .btn-secondary { background-color: #6c757d; }
+        .btn-secondary:hover:not(:disabled) { background-color: #545b62; }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #e8f5e9;
+            border: 1px solid #a5d6a7;
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin-bottom: 16px;
+            font-size: 0.8rem;
+            color: #2e7d32;
+        }
+        .trust-badge svg { flex-shrink: 0; width: 18px; height: 18px; }
+
+        /* Global input resets */
+        .generator-container input[type="checkbox"] {
+            appearance: auto;
+            -webkit-appearance: checkbox;
+            width: auto;
+            padding: 0;
+            border: revert;
+            border-radius: 0;
+            background: revert;
+            box-shadow: none;
+            cursor: pointer;
+        }
+
+        .generator-container input[type="number"] {
+            width: 80px;
+            padding: 6px 10px;
+            text-align: right;
+        }
+
+        .generator-container input[type="text"],
+        .generator-container input[type="password"],
+        .generator-container select,
+        .generator-container textarea {
+            appearance: auto;
+            -webkit-appearance: auto;
+            width: 100%;
+            padding: 9px 12px;
+            font-size: 0.9rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #fff;
+            color: #333;
+            outline: none;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .generator-container input[type="text"]:focus,
+        .generator-container input[type="password"]:focus,
+        .generator-container select:focus,
+        .generator-container textarea:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0,123,255,.12);
+        }
+
+        .generator-container textarea {
+            font-family: monospace;
+            font-size: 0.85rem;
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .setting--disabled { opacity: 0.4; pointer-events: none; }
+
+        .field-label {
+            display: block;
+            font-size: 0.82rem;
+            color: #555;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .field-hint {
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 4px;
+            margin-bottom: 10px;
+        }
+
+        .nav-link {
+            display: block;
+            text-align: center;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: #555;
+            text-decoration: none;
+        }
+        .nav-link:hover { text-decoration: underline; }
+
+        .tool-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 24px;
+            font-size: 0.85rem;
+            color: #555;
+        }
+        .tool-nav a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .tool-nav a:hover { text-decoration: underline; }
+
+        .info-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px; height: 18px;
+            border-radius: 50%;
+            background: #6c757d;
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            margin-left: 6px;
+            padding: 0;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+        .info-btn:hover { background: #495057; }
+
+        /* Modal */
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-backdrop.is-open { display: flex; }
+
+        .modal {
+            background: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            max-width: 460px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .modal h2 {
+            margin: 0 0 12px;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .modal p {
+            margin: 0 0 10px;
+            font-size: 0.875rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .modal p:last-of-type { margin-bottom: 16px; }
+        .modal code {
+            background: rgba(0,0,0,.07);
+            border-radius: 3px;
+            padding: 1px 5px;
+            font-size: 0.85rem;
+        }
+
+        .modal-note {
+            background: #f0f4ff;
+            border-left: 3px solid #007bff;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: #444;
+            margin-bottom: 16px;
+        }
+
+        .modal-close {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            background: #6c757d;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .modal-close:hover { background: #495057; }
+
+        /* ============ Text Encryption ============ */
+        #enc-result {
+            display: none;
+            margin-top: 16px;
+            padding: 14px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        #enc-result.is-visible { display: block; }
+
+        #enc-link {
+            width: 100%;
+            font-size: 0.75rem;
+            font-family: monospace;
+            word-break: break-all;
+            resize: vertical;
+            min-height: 80px;
+            box-sizing: border-box;
+        }
+
+        .enc-warn {
+            margin-top: 10px;
+            padding: 8px 12px;
+            font-size: 0.78rem;
+            color: #856404;
+            background: #fff8e1;
+            border: 1px solid #ffe082;
+            border-radius: 4px;
+            line-height: 1.5;
+        }
+
+        /* ============ File Checksum ============ */
+        .drop-zone {
+            border: 2px dashed #aaa;
+            border-radius: 6px;
+            padding: 28px 16px;
+            text-align: center;
+            color: #666;
+            font-size: 0.88rem;
+            background: #fff;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+            margin-bottom: 12px;
+        }
+
+        .drop-zone.drag-over {
+            border-color: #007bff;
+            background: #e7f1ff;
+            color: #007bff;
+        }
+
+        .drop-zone input[type="file"] { display: none; }
+
+        .file-picker-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .file-picker-row .btn { font-size: 0.85rem; padding: 8px; }
+
+        .file-results {
+            margin-top: 12px;
+            max-height: 320px;
+            overflow-y: auto;
+        }
+
+        .file-row {
+            padding: 10px 12px;
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 6px;
+            font-size: 0.8rem;
+        }
+
+        .file-row-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 4px;
+            align-items: baseline;
+        }
+
+        .file-name {
+            font-weight: 500;
+            color: #333;
+            word-break: break-all;
+        }
+
+        .file-size {
+            color: #888;
+            font-size: 0.72rem;
+            flex-shrink: 0;
+        }
+
+        .file-hash {
+            font-family: monospace;
+            font-size: 0.72rem;
+            color: #444;
+            word-break: break-all;
+            background: #f8f8f8;
+            padding: 6px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            user-select: all;
+        }
+
+        .file-hash.is-calc { color: #888; font-style: italic; }
+        .file-hash.is-error { color: #c0392b; background: #fdecea; }
+
+        .file-hash-match {
+            margin-top: 4px;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+        .file-hash-match.is-ok   { color: #1e7e34; }
+        .file-hash-match.is-fail { color: #c0392b; }
+
+        .verify-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .verify-row input[type="text"] {
+            flex: 1;
+            font-family: monospace;
+            font-size: 0.75rem;
+        }
+
+        .copy-feedback { color: #1e7e34; font-size: 0.78rem; margin-left: 8px; }
+    </style>
+</head>
+<body>
+    <main>
+    <div class="generator-container">
+        <h1 style="display:flex; align-items:center; justify-content:center; gap:8px;">
+            Sicherheits-Tools
+            <button class="info-btn" id="haftung-info-btn" type="button" aria-label="Informationen zum Haftungsausschluss?">i</button>
+        </h1>
+        <div class="modal-backdrop" id="haftung-modal" role="dialog" aria-modal="true" aria-labelledby="haftung-modal-title">
+            <div class="modal">
+                <h2 id="haftung-modal-title">Haftungsausschluss</h2>
+                <p>
+                    Die auf dieser Seite bereitgestellten Tools (insbesondere zur Textverschlüsselung,
+                    Passworterzeugung sowie zur Erstellung und Prüfung von Prüfsummen) dienen ausschließlich
+                    zu Informations-, Demonstrations- und Unterstützungszwecken im Bereich IT-Sicherheit.
+                </p>
+
+                <h3>Keine Garantie für Sicherheit oder Eignung</h3>
+                <p>
+                    Es wird keine Gewähr dafür übernommen, dass die bereitgestellten Funktionen den aktuellen
+                    sicherheitstechnischen Anforderungen entsprechen oder für einen bestimmten Einsatzzweck
+                    geeignet sind. Insbesondere stellen die generierten Ergebnisse keine geprüften oder
+                    zertifizierten Sicherheitsmechanismen dar.
+                </p>
+
+                <h3>Kein Ersatz für professionelle Sicherheitsmaßnahmen</h3>
+                <p>
+                    Die Nutzung der bereitgestellten Tools ersetzt keine professionelle Sicherheitsarchitektur,
+                    keine individuelle Risikoanalyse und keine fachkundige Beratung durch IT-Sicherheitsexperten.
+                    Für produktive oder sicherheitskritische Anwendungen sind stets geeignete, geprüfte und
+                    regelmäßig aktualisierte Verfahren einzusetzen.
+                </p>
+
+                <h3>Nutzung auf eigenes Risiko</h3>
+                <p>
+                    Die Verwendung der erzeugten Passwörter, Verschlüsselungen oder Prüfsummen erfolgt auf eigene
+                    Verantwortung. Der Betreiber übernimmt keine Haftung für Schäden, Datenverluste,
+                    Sicherheitsvorfälle oder sonstige Nachteile, die direkt oder indirekt aus der Nutzung der Tools
+                    entstehen, sofern kein vorsätzliches oder grob fahrlässiges Verschulden vorliegt.
+                </p>
+
+                <h3>Einschränkungen kryptografischer Verfahren</h3>
+                <p>
+                    Die implementierten Verfahren können vereinfacht, eingeschränkt oder nicht für den produktiven
+                    Einsatz optimiert sein. Es wird ausdrücklich darauf hingewiesen, dass unsachgemäße Anwendung
+                    oder falsche Interpretation der Ergebnisse zu einem verminderten Sicherheitsniveau führen kann.
+                </p>
+
+                <h3>Verantwortung für eingegebene Daten</h3>
+                <p>
+                    Nutzer sind selbst dafür verantwortlich, welche Daten sie in die Tools eingeben. Es wird
+                    dringend empfohlen, keine vertraulichen, personenbezogenen oder sicherheitskritischen
+                    Informationen einzugeben, sofern nicht sichergestellt ist, dass die Verarbeitung ausschließlich
+                    lokal und ohne Übertragung an Dritte erfolgt.
+                </p>
+
+                <h3>Keine Haftung für Drittkomponenten</h3>
+                <p>
+                    Sofern externe Bibliotheken, Frameworks oder Dienste verwendet werden, übernimmt der Betreiber
+                    keine Gewähr für deren Sicherheit, Verfügbarkeit oder Funktionsfähigkeit.
+                </p>
+
+                <h3>Verfügbarkeit und Änderungen</h3>
+                <p>
+                    Der Betreiber behält sich vor, die bereitgestellten Funktionen jederzeit ohne vorherige
+                    Ankündigung zu ändern, einzuschränken oder einzustellen. Ein Anspruch auf permanente
+                    Verfügbarkeit besteht nicht.
+                </p>
+
+                <p><strong>Stand:</strong> 16.04.2026</p>
+                <button class="modal-close" data-close="haftung-modal">Verstanden</button>
+            </div>
+        </div>
+
+        <p class="tool-subtitle">Passwörter · Text-Verschlüsselung · Datei-Prüfsummen</p>
+
+        <nav class="tab-nav" role="tablist">
+            <button class="tab-btn active" data-tab="password" role="tab" aria-selected="true">Passwort</button>
+            <button class="tab-btn" data-tab="encrypt"  role="tab" aria-selected="false">Text verschlüsseln</button>
+            <button class="tab-btn" data-tab="checksum" role="tab" aria-selected="false">Datei-Prüfsumme</button>
+        </nav>
+
+        <!-- ================== Tab: Passwort ================== -->
+        <div class="tab-panel active" id="tab-password" role="tabpanel">
+            <div class="result-container" id="password-display">Klicke auf Generieren</div>
+
+            <div class="strength-wrapper">
+                <div class="strength-track">
+                    <div class="strength-bar" id="strength-bar"></div>
+                </div>
+                <div class="strength-meta">
+                    <span id="strength-label"></span>
+                    <span id="entropy-label"></span>
+                </div>
+            </div>
+
+            <div class="setting">
+                <label for="length">Länge (4–128):</label>
+                <input type="number" id="length" min="4" max="128" value="16">
+            </div>
+            <div class="setting">
+                <label for="uppercase">Großbuchstaben (A–Z):</label>
+                <input type="checkbox" id="uppercase" checked>
+            </div>
+            <div class="setting">
+                <label for="lowercase">Kleinbuchstaben (a–z):</label>
+                <input type="checkbox" id="lowercase" checked>
+            </div>
+            <div class="setting">
+                <label for="numbers">Zahlen (0–9):</label>
+                <input type="checkbox" id="numbers" checked>
+            </div>
+            <div class="setting">
+                <label for="symbols">Sonderzeichen (!@#$%…):</label>
+                <input type="checkbox" id="symbols">
+            </div>
+            <div class="setting">
+                <label for="memorable" style="display:flex;align-items:center;gap:0;">
+                    Menschenlesbar (Leet-Speak)
+                    <button class="info-btn" id="leet-info-btn" type="button" aria-label="Warum sind Leet-Passwörter schwächer?">i</button>
+                </label>
+                <input type="checkbox" id="memorable">
+            </div>
+
+            <div class="btn-row">
+                <button class="btn" id="generate-btn">Passwort generieren</button>
+                <button class="btn btn-secondary" id="copy-btn" disabled>Kopieren</button>
+            </div>
+        </div>
+
+        <!-- ================== Tab: Verschlüsselung ================== -->
+        <div class="tab-panel" id="tab-encrypt" role="tabpanel">
+            <div class="trust-badge" role="note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <span>AES-GCM 256 im Browser — Klartext verlässt nie diese Seite</span>
+            </div>
+
+            <label class="field-label" for="enc-input">Zu verschlüsselnder Text</label>
+            <textarea id="enc-input" placeholder="Passwort, API-Key, sensible Information…" autocomplete="off" spellcheck="false"></textarea>
+
+            <label class="field-label" for="enc-pass" style="margin-top:10px;">
+                Passphrase (optional)
+                <button class="info-btn" id="enc-info-btn" type="button" aria-label="Was macht die Passphrase?">i</button>
+            </label>
+            <input type="password" id="enc-pass" placeholder="Leer lassen für Schlüssel im Link" autocomplete="new-password">
+            <p class="field-hint">Mit Passphrase: Empfänger muss sie kennen (sicherer). Ohne: Schlüssel wird in den Link eingebettet.</p>
+
+            <div class="btn-row" style="margin-top:12px;">
+                <button class="btn" id="enc-btn">Verschlüsseln &amp; Link erzeugen</button>
+            </div>
+
+            <div id="enc-result" aria-live="polite">
+                <label class="field-label" for="enc-link">Dein Einmallink:</label>
+                <textarea id="enc-link" readonly rows="3" onclick="this.select()"></textarea>
+                <div class="btn-row" style="margin-top:8px;">
+                    <button class="btn btn-secondary" id="enc-copy-btn">Link kopieren</button>
+                    <button class="btn btn-secondary" id="enc-mail-btn">Per E-Mail senden</button>
+                </div>
+                <div class="enc-warn">
+                    <strong>Hinweis:</strong> Diese Seite ist statisch — der Link lässt sich ohne Backend nicht serverseitig invalidieren. Behandle ihn als Einmal-Geheimnis: Empfänger soll nach dem Abruf den Link löschen.
+                </div>
+            </div>
+        </div>
+
+        <!-- ================== Tab: Prüfsumme ================== -->
+        <div class="tab-panel" id="tab-checksum" role="tabpanel">
+            <div class="trust-badge" role="note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <span>Prüfsummen werden lokal berechnet — Dateien werden nicht hochgeladen</span>
+            </div>
+
+            <div class="setting">
+                <label for="hash-algo">Algorithmus:</label>
+                <select id="hash-algo" style="width:auto;">
+                    <option value="SHA-256" selected>SHA-256</option>
+                    <option value="SHA-512">SHA-512</option>
+                    <option value="SHA-384">SHA-384</option>
+                    <option value="SHA-1">SHA-1 (unsicher, nur für Legacy)</option>
+                </select>
+            </div>
+
+            <label class="drop-zone" id="drop-zone" for="file-input">
+                Dateien hier ablegen oder klicken zum Auswählen
+                <input type="file" id="file-input" multiple>
+            </label>
+
+            <div class="file-picker-row">
+                <button class="btn btn-secondary" id="dir-btn" type="button">Verzeichnis wählen</button>
+                <button class="btn btn-secondary" id="clear-btn" type="button">Liste leeren</button>
+                <input type="file" id="dir-input" webkitdirectory directory multiple style="display:none;">
+            </div>
+
+            <label class="field-label" for="verify-input">Prüfsumme verifizieren (optional):</label>
+            <div class="verify-row">
+                <input type="text" id="verify-input" placeholder="Erwartete Prüfsumme einfügen…" autocomplete="off">
+            </div>
+            <p class="field-hint">Wenn ausgefüllt, werden alle berechneten Hashes mit diesem Wert verglichen.</p>
+
+            <div class="file-results" id="file-results" aria-live="polite"></div>
+        </div>
+
+        <nav class="tool-nav" aria-label="Weitere Tools">
+            <a href="strength.html">Passwort-Stärke-Test</a>
+            <span aria-hidden="true">·</span>
+            <a href="hash.html">Hash-Generator</a>
+        </nav>
+        <a href="index.html" class="nav-link">← Zur Startseite</a>
+    </div>
+
+    <!-- Modal: Leet-Speak -->
+    <div class="modal-backdrop" id="leet-modal" role="dialog" aria-modal="true" aria-labelledby="leet-modal-title">
+        <div class="modal">
+            <h2 id="leet-modal-title">Warum sind Leet-Passwörter schwächer?</h2>
+            <p>Cracking-Tools wie Hashcat haben Leet-Substitutionen als <strong>Standardregel</strong> eingebaut. Wer <code>password</code> probiert, probiert automatisch auch <code>p@55w0rd!</code> — ohne Mehraufwand.</p>
+            <p>Ein Passwort wie <code>B0ckwur5tSt4nd!</code> hat strukturell nur ca. <strong>20 Bit Entropie</strong>. Ein echter Zufallsgenerator erreicht mit 16 Zeichen ~95 Bit.</p>
+            <div class="modal-note">
+                <strong>Wann trotzdem sinnvoll:</strong> Wenn das Passwort auswendig gelernt werden muss und kein Passwort-Manager in Frage kommt — z.&nbsp;B. ein WLAN-Passwort für Gäste.
+            </div>
+            <button class="modal-close" data-close="leet-modal">Verstanden</button>
+        </div>
+    </div>
+
+    <!-- Modal: Encryption info -->
+    <div class="modal-backdrop" id="enc-modal" role="dialog" aria-modal="true" aria-labelledby="enc-modal-title">
+        <div class="modal">
+            <h2 id="enc-modal-title">Passphrase: Was bewirkt sie?</h2>
+            <p><strong>Ohne Passphrase:</strong> Ein zufälliger Schlüssel wird erzeugt und direkt in den Link eingebettet (im URL-Fragment nach <code>#</code>). Fragmente werden vom Browser <em>nicht</em> an den Server gesendet — der Schlüssel bleibt also privat zwischen Sender und Empfänger. Jeder mit dem Link kann den Inhalt lesen.</p>
+            <p><strong>Mit Passphrase:</strong> Es wird kein Schlüssel in den Link geschrieben. Stattdessen wird aus deiner Passphrase per PBKDF2 (250&nbsp;000 Iterationen, SHA-256) ein Schlüssel abgeleitet. Der Empfänger braucht <em>sowohl</em> den Link <em>als auch</em> die Passphrase — die du über einen separaten Kanal übermittelst (z.&nbsp;B. Telefon, Signal).</p>
+            <div class="modal-note">
+                Die Passphrase-Variante ist sicherer gegen unbeabsichtigte Link-Weitergabe. Für Geheimnisse mit hohem Schutzbedarf: Passphrase setzen und separat übermitteln.
+            </div>
+            <button class="modal-close" data-close="enc-modal">Verstanden</button>
+        </div>
+    </div>
+    </main>
+
+    <script src="generator.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8765/)",
+      "Bash(sed -i 's/Zen-IT/Lotus-IT/g;:*)",
+      "Bash(node --check /home/helge/Dokumente/LotusIT/Homepage/i18n.js)",
+      "Bash(node --check /home/helge/Dokumente/LotusIT/Homepage/script.js)",
+      "Bash(python3 -c ':*)",
+      "Bash(fuser -k 8765/tcp)",
+      "Bash(python3 -m http.server 8765)",
+      "Bash(kill 107141)"
+    ]
+  }
+}

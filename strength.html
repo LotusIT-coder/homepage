@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passwort-Stärke-Tester | Lotus IT-Services</title>
+    <meta name="description" content="Teste die Stärke deines Passworts direkt im Browser — kein Server-Call, keine Datenweitergabe. Entropie-Analyse, Mustererkennung und konkrete Tipps.">
+    <meta name="keywords" content="Passwort-Stärke, Passwort-Tester, Entropie, Sicherheit, Browser-Tool, Passwort-Generator">
+    <link rel="canonical" href="https://www.lotus-it.de/strength.html" />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.lotus-it.de/strength.html" />
+    <meta property="og:title" content="Passwort-Stärke-Tester | Lotus IT-Services" />
+    <meta property="og:description" content="Teste die Stärke deines Passworts direkt im Browser — kein Server-Call, keine Datenweitergabe." />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:site_name" content="Lotus IT-Services" />
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:title" content="Passwort-Stärke-Tester | Lotus IT-Services" />
+    <meta property="twitter:description" content="Teste die Stärke deines Passworts direkt im Browser — kein Server-Call, keine Datenweitergabe." />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Passwort-Stärke-Tester",
+      "description": "Teste die Stärke deines Passworts direkt im Browser",
+      "url": "https://www.lotus-it.de/strength.html",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web Browser",
+      "provider": {
+        "@type": "Organization",
+        "name": "Lotus IT-Services"
+      }
+    }
+    </script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="fonts/fonts.css">
+    <style>
+        .tool-container {
+            max-width: 540px;
+            margin: 50px auto;
+            padding: 28px 24px;
+            background: #f4f4f4;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .tool-container h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 6px;
+            font-size: 1.5rem;
+        }
+
+        .tool-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        /* Trust badge */
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #e8f5e9;
+            border: 1px solid #a5d6a7;
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin-bottom: 20px;
+            font-size: 0.82rem;
+            color: #2e7d32;
+        }
+
+        .trust-badge svg {
+            flex-shrink: 0;
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Input row */
+        .input-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .input-row input {
+            flex: 1;
+            padding: 10px 14px;
+            font-size: 1rem;
+            font-family: monospace;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #fff;
+            color: #333;
+            outline: none;
+            width: auto;
+            appearance: auto;
+        }
+
+        .input-row input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0,123,255,.12);
+        }
+
+        .btn-toggle {
+            padding: 10px 14px;
+            background: #6c757d;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .btn-toggle:hover { background: #495057; }
+
+        /* Strength bar */
+        .strength-track {
+            height: 8px;
+            background: #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 6px;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0%;
+            border-radius: 4px;
+            transition: width 0.3s, background-color 0.3s;
+        }
+
+        .strength-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #555;
+            margin-bottom: 16px;
+        }
+
+        /* Char stats */
+        #char-stats {
+            font-size: 0.78rem;
+            color: #777;
+            margin-bottom: 16px;
+            min-height: 1.2em;
+        }
+
+        #char-stats span + span::before { content: ' · '; }
+
+        /* Feedback lists */
+        .fb-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 8px;
+        }
+
+        .fb-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 0.83rem;
+            padding: 5px 0;
+            border-bottom: 1px solid #e8e8e8;
+            line-height: 1.4;
+        }
+
+        .fb-item:last-child { border-bottom: none; }
+
+        .fb-item span {
+            font-weight: bold;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            width: 14px;
+        }
+
+        .fb-warn { color: #c0392b; }
+        .fb-warn span { color: #e74c3c; }
+        .fb-ok   { color: #1e7e34; }
+        .fb-ok   span { color: #27ae60; }
+
+        .nav-link {
+            display: block;
+            text-align: center;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: #555;
+            text-decoration: none;
+        }
+
+        .nav-link:hover { text-decoration: underline; }
+
+        .tool-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 24px;
+            font-size: 0.85rem;
+            color: #555;
+        }
+        .tool-nav a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .tool-nav a:hover { text-decoration: underline; }
+
+        /* Override global input styles from style.css */
+        .tool-container input[type="password"],
+        .tool-container input[type="text"] {
+            appearance: auto;
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+    <main>
+    <div class="tool-container">
+        <h1>Passwort-Stärke-Tester</h1>
+        <p class="tool-subtitle">Analyse direkt im Browser — ohne Netzwerk-Verbindung</p>
+
+        <div class="trust-badge" role="note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span>Kein Server-Call — dein Passwort verlässt nie deinen Browser</span>
+        </div>
+
+        <div class="input-row">
+            <input
+                type="password"
+                id="pwd-input"
+                placeholder="Passwort hier eingeben…"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
+                aria-label="Passwort eingeben"
+            >
+            <button class="btn-toggle" id="toggle-visibility" type="button" aria-label="Passwort anzeigen">
+                Anzeigen
+            </button>
+        </div>
+
+        <div class="strength-track">
+            <div class="strength-bar" id="strength-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <div class="strength-meta">
+            <span id="strength-label"></span>
+            <span id="entropy-label"></span>
+        </div>
+
+        <div id="char-stats" aria-live="polite"></div>
+
+        <ul class="fb-list" id="warnings-list"  aria-label="Warnungen"  aria-live="polite"></ul>
+        <ul class="fb-list" id="positives-list" aria-label="Positives"  aria-live="polite"></ul>
+
+        <nav class="tool-nav" aria-label="Weitere Tools">
+            <a href="generator.html">Passwort-Generator</a>
+            <span aria-hidden="true">·</span>
+            <a href="hash.html">Hash-Generator</a>
+        </nav>
+        <a href="index.html" class="nav-link">← Zur Startseite</a>
+    </div>
+    </main>
+
+    <script src="strength.js"></script>
+</body>
+</html>

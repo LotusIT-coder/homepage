@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verschlüsselte Nachricht | Lotus IT-Services</title>
+    <meta name="description" content="Verschlüsselte Nachricht anzeigen und entschlüsseln — sicher und privat im Browser.">
+    <meta name="keywords" content="Verschlüsselte Nachricht, Entschlüsselung, Browser-Tool, Sicherheit">
+    <meta name="robots" content="noindex,nofollow">
+    <link rel="canonical" href="https://www.lotus-it.de/view.html" />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.lotus-it.de/view.html" />
+    <meta property="og:title" content="Verschlüsselte Nachricht | Lotus IT-Services" />
+    <meta property="og:description" content="Verschlüsselte Nachricht anzeigen und entschlüsseln — sicher und privat im Browser." />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:site_name" content="Lotus IT-Services" />
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:title" content="Verschlüsselte Nachricht | Lotus IT-Services" />
+    <meta property="twitter:description" content="Verschlüsselte Nachricht anzeigen und entschlüsseln — sicher und privat im Browser." />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Verschlüsselte Nachricht Viewer",
+      "description": "Verschlüsselte Nachrichten anzeigen und entschlüsseln",
+      "url": "https://www.lotus-it.de/view.html",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web Browser",
+      "provider": {
+        "@type": "Organization",
+        "name": "Lotus IT-Services"
+      }
+    }
+    </script>
+    <link rel="stylesheet" href="fonts/fonts.css">
+    <style>
+        .view-container {
+            max-width: 560px;
+            margin: 50px auto;
+            padding: 28px 24px;
+            background: #f4f4f4;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .view-container h1 {
+            text-align: center;
+            color: #333;
+            font-size: 1.4rem;
+            margin: 0 0 6px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 0.82rem;
+            margin-bottom: 22px;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #e8f5e9;
+            border: 1px solid #a5d6a7;
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin-bottom: 20px;
+            font-size: 0.82rem;
+            color: #2e7d32;
+        }
+        .trust-badge svg { flex-shrink: 0; width: 18px; height: 18px; }
+
+        .field-label {
+            display: block;
+            font-size: 0.82rem;
+            color: #555;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .view-container input[type="password"],
+        .view-container textarea {
+            appearance: auto;
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            font-family: monospace;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #fff;
+            color: #333;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .view-container input:focus,
+        .view-container textarea:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0,123,255,.12);
+        }
+
+        .view-container textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        .btn:hover { background: #0056b3; }
+        .btn:disabled { background: #aaa; cursor: not-allowed; }
+
+        .btn-secondary { background: #6c757d; }
+        .btn-secondary:hover:not(:disabled) { background: #545b62; }
+
+        .state { display: none; }
+        .state.is-active { display: block; }
+
+        .alert {
+            padding: 14px 16px;
+            border-radius: 6px;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+        .alert-error {
+            background: #fdecea;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .alert-warn {
+            background: #fff8e1;
+            border: 1px solid #ffe082;
+            color: #856404;
+        }
+
+        .nav-link {
+            display: block;
+            text-align: center;
+            margin-top: 24px;
+            font-size: 0.85rem;
+            color: #555;
+            text-decoration: none;
+        }
+        .nav-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <main>
+    <div class="view-container">
+        <h1>Verschlüsselte Nachricht</h1>
+        <p class="subtitle">Entschlüsselung läuft direkt in deinem Browser</p>
+
+        <div class="trust-badge" role="note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span>Nichts wird an einen Server gesendet — Entschlüsselung passiert lokal</span>
+        </div>
+
+        <!-- State: No data in URL -->
+        <div class="state" id="state-empty">
+            <div class="alert alert-error">
+                Kein verschlüsselter Inhalt im Link gefunden. Prüfe, ob du den <strong>kompletten</strong> Link geöffnet hast — der Teil nach dem <code>#</code> ist entscheidend.
+            </div>
+        </div>
+
+        <!-- State: Passphrase required -->
+        <div class="state" id="state-pass">
+            <p class="field-label" style="margin-bottom:10px;">Diese Nachricht ist passwortgeschützt. Bitte gib die Passphrase ein, die du vom Absender separat erhalten hast.</p>
+            <label class="field-label" for="view-pass">Passphrase:</label>
+            <input type="password" id="view-pass" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+            <div class="btn-row">
+                <button class="btn" id="view-decrypt-btn">Entschlüsseln</button>
+            </div>
+            <div id="pass-error" class="alert alert-error" style="display:none; margin-top:12px;"></div>
+        </div>
+
+        <!-- State: Decrypted message -->
+        <div class="state" id="state-shown">
+            <div class="alert alert-warn">
+                <strong>Einmal lesen, dann schließen.</strong> Behandle diese Information als Einmal-Geheimnis — kopiere sie in deinen Passwort-Manager und schließe diesen Tab.
+            </div>
+            <label class="field-label" for="plaintext-out">Entschlüsselter Inhalt:</label>
+            <textarea id="plaintext-out" readonly onclick="this.select()"></textarea>
+            <div class="btn-row">
+                <button class="btn btn-secondary" id="copy-plain-btn">Inhalt kopieren</button>
+                <button class="btn btn-secondary" id="clear-plain-btn">Schließen &amp; Löschen</button>
+            </div>
+        </div>
+
+        <!-- State: Fatal error -->
+        <div class="state" id="state-error">
+            <div class="alert alert-error" id="error-msg"></div>
+        </div>
+
+        <a href="index.html" class="nav-link">← Zur Startseite</a>
+    </div>
+    </main>
+
+    <script src="view.js"></script>
+</body>
+</html>

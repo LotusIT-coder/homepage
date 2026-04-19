@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hash-Generator (SHA-256 / SHA-512) | Lotus IT-Services</title>
+    <meta name="description" content="SHA-256 und SHA-512 Hashes direkt im Browser berechnen — kein Server, kein Datenverlust. Mit Erklärung warum MD5 und SHA-1 gebrochen sind.">
+    <meta name="keywords" content="SHA-256, SHA-512, Hash-Generator, Browser-Tool, Sichere Hashes, MD5, SHA-1, Prüfsumme">
+    <link rel="canonical" href="https://www.lotus-it.de/hash.html" />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.lotus-it.de/hash.html" />
+    <meta property="og:title" content="Hash-Generator (SHA-256 / SHA-512) | Lotus IT-Services" />
+    <meta property="og:description" content="SHA-256 und SHA-512 Hashes direkt im Browser berechnen — kein Server, kein Datenverlust." />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:site_name" content="Lotus IT-Services" />
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:title" content="Hash-Generator (SHA-256 / SHA-512) | Lotus IT-Services" />
+    <meta property="twitter:description" content="SHA-256 und SHA-512 Hashes direkt im Browser berechnen — kein Server, kein Datenverlust." />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Hash-Generator",
+      "description": "SHA-256 und SHA-512 Hashes direkt im Browser berechnen",
+      "url": "https://www.lotus-it.de/hash.html",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web Browser",
+      "provider": {
+        "@type": "Organization",
+        "name": "Lotus IT-Services"
+      }
+    }
+    </script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="fonts/fonts.css">
+    <style>
+        .tool-container {
+            max-width: 580px;
+            margin: 50px auto;
+            padding: 28px 24px;
+            background: #f4f4f4;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .tool-container h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 6px;
+            font-size: 1.5rem;
+        }
+
+        .tool-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #e8f5e9;
+            border: 1px solid #a5d6a7;
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin-bottom: 20px;
+            font-size: 0.82rem;
+            color: #2e7d32;
+        }
+
+        .trust-badge svg {
+            flex-shrink: 0;
+            width: 18px;
+            height: 18px;
+        }
+
+        .field-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+            color: #555;
+            margin-bottom: 6px;
+        }
+
+        .algo-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+            align-items: center;
+        }
+
+        .algo-row label {
+            font-size: 0.85rem;
+            color: #444;
+            flex-shrink: 0;
+        }
+
+        /* Override global select style */
+        .tool-container select {
+            width: auto;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #fff;
+            color: #333;
+            cursor: pointer;
+            appearance: auto;
+        }
+
+        .tool-container textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            font-family: monospace;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #fff;
+            color: #333;
+            resize: vertical;
+            min-height: 90px;
+            outline: none;
+            appearance: auto;
+        }
+
+        .tool-container textarea:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0,123,255,.12);
+        }
+
+        .output-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 14px;
+            align-items: stretch;
+        }
+
+        .hash-output {
+            flex: 1;
+            padding: 10px 14px;
+            font-family: monospace;
+            font-size: 0.82rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #fff;
+            color: #333;
+            word-break: break-all;
+            resize: none;
+            min-height: 56px;
+            outline: none;
+            cursor: text;
+            appearance: auto;
+            width: auto;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            flex-shrink: 0;
+            align-self: flex-start;
+        }
+
+        .btn:hover    { background: #0056b3; }
+        .btn:disabled { background: #aaa; cursor: not-allowed; }
+
+        /* Info box: broken algorithms */
+        .info-box {
+            margin-top: 24px;
+            padding: 14px 16px;
+            background: #fff8e1;
+            border: 1px solid #ffe082;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            color: #5d4037;
+            line-height: 1.6;
+        }
+
+        .info-box strong {
+            display: block;
+            margin-bottom: 6px;
+            color: #4e342e;
+        }
+
+        .info-box code {
+            background: rgba(0,0,0,.07);
+            border-radius: 3px;
+            padding: 1px 5px;
+            font-size: 0.8rem;
+        }
+
+        .nav-link {
+            display: block;
+            text-align: center;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: #555;
+            text-decoration: none;
+        }
+
+        .tool-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 24px;
+            font-size: 0.85rem;
+            color: #555;
+        }
+        .tool-nav a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .tool-nav a:hover { text-decoration: underline; }
+
+        .nav-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <main>
+    <div class="tool-container">
+        <h1>Hash-Generator</h1>
+        <p class="tool-subtitle">SHA-256 &amp; SHA-512 direkt im Browser — ohne Netzwerk-Verbindung</p>
+
+        <div class="trust-badge" role="note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span>Kein Server-Call — deine Eingabe verlässt nie deinen Browser</span>
+        </div>
+
+        <div class="algo-row">
+            <label for="algo-select">Algorithmus:</label>
+            <select id="algo-select" aria-label="Hash-Algorithmus wählen">
+                <option value="SHA-256" selected>SHA-256 (256 Bit)</option>
+                <option value="SHA-512">SHA-512 (512 Bit)</option>
+            </select>
+        </div>
+
+        <div class="field-label">
+            <span>Eingabe</span>
+            <span id="char-count">0 Zeichen</span>
+        </div>
+        <textarea
+            id="hash-input"
+            placeholder="Text oder Passwort eingeben…"
+            autocomplete="off"
+            autocorrect="off"
+            spellcheck="false"
+            aria-label="Zu hashender Text"
+        ></textarea>
+
+        <div class="output-row">
+            <textarea
+                id="hash-output"
+                class="hash-output"
+                readonly
+                placeholder="Hash erscheint hier…"
+                aria-label="Berechneter Hash"
+                rows="2"
+            ></textarea>
+            <button class="btn" id="copy-btn" type="button" disabled>Kopieren</button>
+        </div>
+
+        <div class="info-box" role="note">
+            <strong>Warum kein MD5 oder SHA-1?</strong>
+            <code>MD5</code> und <code>SHA-1</code> gelten seit Jahren als gebrochen: Kollisionen (zwei verschiedene Eingaben mit identischem Hash) lassen sich in Sekunden erzeugen. Für Passwort-Hashing sind sie nie geeignet gewesen — dafür braucht man speziell langsame Algorithmen wie <code>bcrypt</code>, <code>Argon2</code> oder <code>scrypt</code>. Für Prüfsummen und Signaturen gilt: mindestens <code>SHA-256</code>.
+        </div>
+
+        <nav class="tool-nav" aria-label="Weitere Tools">
+            <a href="generator.html">Passwort-Generator</a>
+            <span aria-hidden="true">·</span>
+            <a href="strength.html">Passwort-Stärke-Test</a>
+        </nav>
+        <a href="index.html" class="nav-link">← Zur Startseite</a>
+    </div>
+    </main>
+
+    <script src="hash.js"></script>
+</body>
+</html>
