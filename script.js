@@ -498,16 +498,16 @@ if (form) form.addEventListener('submit', (e) => {
   const hotspot = document.querySelector('#kontakt .contact-energy-hotspot');
   const section = document.getElementById('kontakt');
   if (!hotspot || !section) return;
+  const point = hotspot.querySelector('.contact-energy-point');
+  const arrow = hotspot.querySelector('.contact-energy-arrow');
+  if (!point) return;
 
-  // Bild-Maße + Berührungspunkt der Fingerspitzen (Bruchteile von B/H)
+  // Bild-Maße + Berührungspunkt der Fingerspitzen (Bruchteile von B/H).
+  // Empirisch aus hommage_sw.png ausgelesen.
   const IMG_W = 1536;
   const IMG_H = 1024;
-  // Berührungspunkt zwischen menschlichem Zeigefinger (links)
-  // und Roboter-Zeigefinger – empirisch aus der Grafik abgelesen.
   const TOUCH_X = 0.365;
   const TOUCH_Y = 0.475;
-  const ARROW_HEIGHT = 184; // wie in CSS .contact-energy-arrow
-  const POINT_OFFSET = 17;  // Hälfte des .contact-energy-point (35/2)
 
   const place = () => {
     const rect = section.getBoundingClientRect();
@@ -520,35 +520,32 @@ if (form) form.addEventListener('submit', (e) => {
 
     let scale, offsetX, offsetY;
     if (containerAR > imgAR) {
-      // Container breiter als Bild: Bild wird auf cw skaliert, oben/unten abgeschnitten
       scale = cw / IMG_W;
       offsetX = 0;
       offsetY = (ch - IMG_H * scale) / 2;
     } else {
-      // Container schmaler: Bild wird auf ch skaliert, links/rechts abgeschnitten
       scale = ch / IMG_H;
       offsetX = (cw - IMG_W * scale) / 2;
       offsetY = 0;
     }
 
+    // Ziel = Render-Position des Funken-Pixels innerhalb der Sektion.
     const targetX = offsetX + TOUCH_X * IMG_W * scale;
     const targetY = offsetY + TOUCH_Y * IMG_H * scale;
 
-    // Punkt-Mittelpunkt innerhalb des Hotspots aus dem CSS lesen,
-    // damit Mobile- und Desktop-Größen automatisch berücksichtigt sind.
-    const point = hotspot.querySelector('.contact-energy-point');
-    let pointCenterY = ARROW_HEIGHT + POINT_OFFSET;
-    if (point) {
-      const cs = getComputedStyle(point);
-      const pTop = parseFloat(cs.top) || ARROW_HEIGHT;
-      const pH = point.offsetHeight || (POINT_OFFSET * 2);
-      pointCenterY = pTop + pH / 2;
-    }
+    // Punkt-Größe (px). Pfeilhöhe aus CSS für den Pfeil-Überhang oben.
+    const pW = point.offsetWidth || 35;
+    const pH = point.offsetHeight || 35;
+    const arrowH = arrow ? arrow.getBoundingClientRect().height : 184;
 
-    // Hotspot horizontal mittig auf den Berührungspunkt setzen.
+    // Hotspot so positionieren, dass der Punkt-Mittelpunkt exakt auf
+    // (targetX, targetY) sitzt. Der Pfeil ragt entsprechend nach oben.
     const hotspotW = hotspot.offsetWidth || 96;
     hotspot.style.left = `${targetX - hotspotW / 2}px`;
-    hotspot.style.top = `${targetY - pointCenterY}px`;
+    hotspot.style.top = `${targetY - arrowH - pH / 2}px`;
+
+    // Punkt innerhalb des Hotspots direkt unter den Pfeil setzen.
+    point.style.top = `${arrowH}px`;
   };
 
   place();
