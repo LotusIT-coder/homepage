@@ -505,8 +505,8 @@ if (form) form.addEventListener('submit', (e) => {
   // Bild-Maße + Berührungspunkt der Fingerspitzen (Bruchteile von B/H).
   const IMG_W = 1536;
   const IMG_H = 1024;
-  const TOUCH_X = 0.365;
-  const TOUCH_Y = 0.475;
+  const TOUCH_X = 0.501;
+  const TOUCH_Y = 0.479;
 
   const place = () => {
     const cw = section.clientWidth;
