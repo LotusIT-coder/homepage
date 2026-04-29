@@ -503,16 +503,15 @@ if (form) form.addEventListener('submit', (e) => {
   if (!point) return;
 
   // Bild-Maße + Berührungspunkt der Fingerspitzen (Bruchteile von B/H).
-  // Empirisch aus hommage_sw.png ausgelesen.
   const IMG_W = 1536;
   const IMG_H = 1024;
   const TOUCH_X = 0.365;
   const TOUCH_Y = 0.475;
 
   const place = () => {
-    const rect = section.getBoundingClientRect();
-    const cw = rect.width;
-    const ch = rect.height;
+    const sectionRect = section.getBoundingClientRect();
+    const cw = sectionRect.width;
+    const ch = sectionRect.height;
     if (cw === 0 || ch === 0) return;
 
     const imgAR = IMG_W / IMG_H;
@@ -529,22 +528,26 @@ if (form) form.addEventListener('submit', (e) => {
       offsetY = 0;
     }
 
-    // Ziel = Render-Position des Funken-Pixels innerhalb der Sektion.
+    // Ziel = Render-Position des Funken-Pixels in Section-Koordinaten.
     const targetX = offsetX + TOUCH_X * IMG_W * scale;
     const targetY = offsetY + TOUCH_Y * IMG_H * scale;
 
-    // Punkt-Größe (px). Pfeilhöhe aus CSS für den Pfeil-Überhang oben.
-    const pW = point.offsetWidth || 35;
+    // Hotspot ist `position: absolute` → er positioniert sich gegen den
+    // nächsten positionierten Vorfahren (offsetParent). Wir müssen die
+    // Section-Koordinaten in dessen Koordinatensystem umrechnen.
+    const op = hotspot.offsetParent || section;
+    const opRect = op.getBoundingClientRect();
+    const dx = opRect.left - sectionRect.left;
+    const dy = opRect.top - sectionRect.top;
+
     const pH = point.offsetHeight || 35;
     const arrowH = arrow ? arrow.getBoundingClientRect().height : 184;
-
-    // Hotspot so positionieren, dass der Punkt-Mittelpunkt exakt auf
-    // (targetX, targetY) sitzt. Der Pfeil ragt entsprechend nach oben.
     const hotspotW = hotspot.offsetWidth || 96;
-    hotspot.style.left = `${targetX - hotspotW / 2}px`;
-    hotspot.style.top = `${targetY - arrowH - pH / 2}px`;
 
-    // Punkt innerhalb des Hotspots direkt unter den Pfeil setzen.
+    hotspot.style.left = `${targetX - dx - hotspotW / 2}px`;
+    hotspot.style.top = `${targetY - dy - arrowH - pH / 2}px`;
+
+    // Punkt direkt unter dem Pfeil platzieren (entkoppelt von CSS-Konstanten).
     point.style.top = `${arrowH}px`;
   };
 
