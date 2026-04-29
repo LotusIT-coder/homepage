@@ -497,12 +497,13 @@
     <main>
     <div class="generator-container">
         <h1 style="display:flex; align-items:center; justify-content:center; gap:8px;">
-            Sicherheits-Tools
+            <span id="generator-title-text">Sicherheits-Tools</span>
             <button class="info-btn" id="haftung-info-btn" type="button" aria-label="Informationen zum Haftungsausschluss?">i</button>
         </h1>
         <div class="modal-backdrop" id="haftung-modal" role="dialog" aria-modal="true" aria-labelledby="haftung-modal-title">
             <div class="modal">
                 <h2 id="haftung-modal-title">Haftungsausschluss</h2>
+                <div id="haftung-modal-copy">
                 <p>
                     Die auf dieser Seite bereitgestellten Tools (insbesondere zur Textverschlüsselung,
                     Passworterzeugung sowie zur Erstellung und Prüfung von Prüfsummen) dienen ausschließlich
@@ -562,6 +563,7 @@
                 </p>
 
                 <p><strong>Stand:</strong> 16.04.2026</p>
+                </div>
                 <button class="modal-close" data-close="haftung-modal">Verstanden</button>
             </div>
         </div>
@@ -610,7 +612,7 @@
             </div>
             <div class="setting">
                 <label for="memorable" style="display:flex;align-items:center;gap:0;">
-                    Menschenlesbar (Leet-Speak)
+                    <span id="memorable-label-text">Menschenlesbar (Leet-Speak)</span>
                     <button class="info-btn" id="leet-info-btn" type="button" aria-label="Warum sind Leet-Passwörter schwächer?">i</button>
                 </label>
                 <input type="checkbox" id="memorable">
@@ -635,7 +637,7 @@
             <textarea id="enc-input" placeholder="Passwort, API-Key, sensible Information…" autocomplete="off" spellcheck="false"></textarea>
 
             <label class="field-label" for="enc-pass" style="margin-top:10px;">
-                Passphrase (optional)
+                <span id="enc-pass-label-text">Passphrase (optional)</span>
                 <button class="info-btn" id="enc-info-btn" type="button" aria-label="Was macht die Passphrase?">i</button>
             </label>
             <input type="password" id="enc-pass" placeholder="Leer lassen für Schlüssel im Link" autocomplete="new-password">
@@ -678,7 +680,7 @@
             </div>
 
             <label class="drop-zone" id="drop-zone" for="file-input">
-                Dateien hier ablegen oder klicken zum Auswählen
+                <span id="drop-zone-text">Dateien hier ablegen oder klicken zum Auswählen</span>
                 <input type="file" id="file-input" multiple>
             </label>
 
@@ -702,17 +704,19 @@
             <span aria-hidden="true">·</span>
             <a href="hash.html">Hash-Generator</a>
         </nav>
-        <a href="index.html" class="nav-link">← Zur Startseite</a>
+        <a href="it-services.html" class="nav-link">← Zur Startseite</a>
     </div>
 
     <!-- Modal: Leet-Speak -->
     <div class="modal-backdrop" id="leet-modal" role="dialog" aria-modal="true" aria-labelledby="leet-modal-title">
         <div class="modal">
             <h2 id="leet-modal-title">Warum sind Leet-Passwörter schwächer?</h2>
+            <div id="leet-modal-copy">
             <p>Cracking-Tools wie Hashcat haben Leet-Substitutionen als <strong>Standardregel</strong> eingebaut. Wer <code>password</code> probiert, probiert automatisch auch <code>p@55w0rd!</code> — ohne Mehraufwand.</p>
             <p>Ein Passwort wie <code>B0ckwur5tSt4nd!</code> hat strukturell nur ca. <strong>20 Bit Entropie</strong>. Ein echter Zufallsgenerator erreicht mit 16 Zeichen ~95 Bit.</p>
             <div class="modal-note">
                 <strong>Wann trotzdem sinnvoll:</strong> Wenn das Passwort auswendig gelernt werden muss und kein Passwort-Manager in Frage kommt — z.&nbsp;B. ein WLAN-Passwort für Gäste.
+            </div>
             </div>
             <button class="modal-close" data-close="leet-modal">Verstanden</button>
         </div>
@@ -722,10 +726,12 @@
     <div class="modal-backdrop" id="enc-modal" role="dialog" aria-modal="true" aria-labelledby="enc-modal-title">
         <div class="modal">
             <h2 id="enc-modal-title">Passphrase: Was bewirkt sie?</h2>
+            <div id="enc-modal-copy">
             <p><strong>Ohne Passphrase:</strong> Ein zufälliger Schlüssel wird erzeugt und direkt in den Link eingebettet (im URL-Fragment nach <code>#</code>). Fragmente werden vom Browser <em>nicht</em> an den Server gesendet — der Schlüssel bleibt also privat zwischen Sender und Empfänger. Jeder mit dem Link kann den Inhalt lesen.</p>
             <p><strong>Mit Passphrase:</strong> Es wird kein Schlüssel in den Link geschrieben. Stattdessen wird aus deiner Passphrase per PBKDF2 (250&nbsp;000 Iterationen, SHA-256) ein Schlüssel abgeleitet. Der Empfänger braucht <em>sowohl</em> den Link <em>als auch</em> die Passphrase — die du über einen separaten Kanal übermittelst (z.&nbsp;B. Telefon, Signal).</p>
             <div class="modal-note">
                 Die Passphrase-Variante ist sicherer gegen unbeabsichtigte Link-Weitergabe. Für Geheimnisse mit hohem Schutzbedarf: Passphrase setzen und separat übermitteln.
+            </div>
             </div>
             <button class="modal-close" data-close="enc-modal">Verstanden</button>
         </div>

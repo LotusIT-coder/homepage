@@ -48,6 +48,16 @@ function injectImpressumName() {
     });
   });
 
+  document.querySelectorAll('[data-modal-trigger]').forEach(trigger => {
+    trigger.addEventListener('click', () => openModal(trigger.dataset.modalTrigger));
+    trigger.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openModal(trigger.dataset.modalTrigger);
+      }
+    });
+  });
+
   // Close buttons inside modals
   document.querySelectorAll('.svc-modal-close').forEach(btn => {
     btn.addEventListener('click', closeModal);
@@ -112,6 +122,24 @@ mobileMenu.querySelectorAll('a').forEach(link => {
   });
 });
 
+// ── Hero spotlight: jump directly to matching service card ──
+document.querySelectorAll('.hero-service-card[data-focus-card]').forEach(link => {
+  link.addEventListener('click', e => {
+    const cardIdx = link.dataset.focusCard;
+    if (!cardIdx) return;
+
+    const targetCard = document.querySelector(`.service-card[data-idx="${cardIdx}"]`);
+    if (!targetCard) return;
+
+    e.preventDefault();
+
+    // Keep space below fixed navbar so the card lands in immediate view.
+    const navOffset = navbar ? navbar.offsetHeight + 28 : 100;
+    const targetY = targetCard.getBoundingClientRect().top + window.scrollY - navOffset;
+    window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+  });
+});
+
 // ── Hero typing animation ──
 const typingEl = document.getElementById('heroTyping');
 
@@ -164,7 +192,31 @@ setTimeout(type, 900);
   const PARTICLE_COUNT = 80;
   const CONNECTION_DIST = 120;
   const REPEL_RADIUS = 80;
-  const ACCENT_RGB = '214,0,110';
+  const ACCENT_RGB = '214,0,110';   // magenta for dark sections
+  const DARK_RGB   = '0,0,0';       // black for light sections
+
+  // Light-background sections where particles should be black
+  const LIGHT_SECTIONS = ['leistungen', 'kmu', 'faq', 'kontakt'];
+  let lightBands = []; // cached viewport-relative y-bands of light sections
+
+  function updateLightBands() {
+    lightBands = [];
+    for (const id of LIGHT_SECTIONS) {
+      const el = document.getElementById(id);
+      if (!el) continue;
+      const rect = el.getBoundingClientRect();
+      if (rect.bottom > 0 && rect.top < window.innerHeight) {
+        lightBands.push({ top: rect.top, bottom: rect.bottom });
+      }
+    }
+  }
+
+  function isOverLight(y) {
+    for (let i = 0; i < lightBands.length; i++) {
+      if (y >= lightBands[i].top && y <= lightBands[i].bottom) return true;
+    }
+    return false;
+  }
 
   let W, H;
   let mouse = { x: -9999, y: -9999 };
@@ -192,6 +244,7 @@ setTimeout(type, 900);
 
   function draw() {
     ctx.clearRect(0, 0, W, H);
+    updateLightBands();
 
     for (let i = 0; i < particles.length; i++) {
       const p = particles[i];
@@ -209,9 +262,10 @@ setTimeout(type, 900);
       p.x += p.vx; p.y += p.vy;
       if (p.x < -10) p.x = W + 10; if (p.x > W + 10) p.x = -10;
       if (p.y < -10) p.y = H + 10; if (p.y > H + 10) p.y = -10;
+      const rgb = isOverLight(p.y) ? DARK_RGB : ACCENT_RGB;
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${ACCENT_RGB}, 0.5)`;
+      ctx.fillStyle = `rgba(${rgb}, 0.5)`;
       ctx.fill();
     }
 
@@ -221,10 +275,12 @@ setTimeout(type, 900);
         const dx = a.x - b.x, dy = a.y - b.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
         if (dist < CONNECTION_DIST) {
+          const midY = (a.y + b.y) / 2;
+          const rgb = isOverLight(midY) ? DARK_RGB : ACCENT_RGB;
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(b.x, b.y);
-          ctx.strokeStyle = `rgba(${ACCENT_RGB}, ${(1 - dist / CONNECTION_DIST) * 0.35})`;
+          ctx.strokeStyle = `rgba(${rgb}, ${(1 - dist / CONNECTION_DIST) * 0.35})`;
           ctx.lineWidth = 0.8;
           ctx.stroke();
         }
@@ -363,7 +419,7 @@ const form = document.getElementById('contactForm');
 const successMsg = document.getElementById('formSuccess');
 const errorMsg = document.getElementById('formError');
 
-form.addEventListener('submit', (e) => {
+if (form) form.addEventListener('submit', (e) => {
   e.preventDefault();
   let valid = true;
   ['name', 'email', 'nachricht'].forEach(id => {

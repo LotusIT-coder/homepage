@@ -1,13 +1,108 @@
 'use strict';
 
-const pwdInput      = document.getElementById('pwd-input');
-const toggleBtn     = document.getElementById('toggle-visibility');
-const strengthBar   = document.getElementById('strength-bar');
+const TRANSLATIONS = {
+    de: {
+        metaTitle: 'Passwort-Stärke-Tester | Lotus IT-Services',
+        metaDescription: 'Teste die Stärke deines Passworts direkt im Browser - kein Server-Call, keine Datenweitergabe. Entropie-Analyse, Mustererkennung und konkrete Tipps.',
+        ogLocale: 'de_DE',
+        schemaName: 'Passwort-Stärke-Tester',
+        schemaDescription: 'Teste die Stärke deines Passworts direkt im Browser',
+        title: 'Passwort-Stärke-Tester',
+        subtitle: 'Analyse direkt im Browser - ohne Netzwerk-Verbindung',
+        trust: 'Kein Server-Call - dein Passwort verlässt nie deinen Browser',
+        inputPlaceholder: 'Passwort hier eingeben…',
+        inputAria: 'Passwort eingeben',
+        show: 'Anzeigen',
+        hide: 'Verbergen',
+        showAria: 'Passwort anzeigen',
+        hideAria: 'Passwort verbergen',
+        warningsAria: 'Warnungen',
+        positivesAria: 'Positives',
+        navGenerator: 'Passwort-Generator',
+        navHash: 'Hash-Generator',
+        toolNavAria: 'Weitere Tools',
+        home: '← Zur Startseite',
+        veryWeak: 'Sehr schwach',
+        weak: 'Schwach',
+        medium: 'Mittel',
+        strong: 'Stark',
+        veryStrong: 'Sehr stark',
+        bitEntropy: '{value} Bit Entropie',
+        warnTop: 'Eines der häufigsten Passwörter - wird von jedem Angreifer als Erstes ausprobiert',
+        warnTooShort: 'Zu kurz ({value} Zeichen) - mindestens 12 empfohlen',
+        warnBorderline: 'Länge grenzwertig - 12+ Zeichen erhöhen die Sicherheit deutlich',
+        okLong: 'Sehr gute Länge (≥ 20 Zeichen)',
+        okGood: 'Gute Länge (≥ 12 Zeichen)',
+        warnKeyboard: 'Tastatur-Muster erkannt (z. B. "qwerty", "asdf", "1234")',
+        warnSequence: 'Zeichenfolge erkannt (z. B. "abcd", "1234", "9876")',
+        warnRepeat: 'Wiederholte Zeichen erkannt (z. B. "aaa", "111")',
+        warnYear: 'Jahreszahl erkannt - Geburtsjahre sind ein häufiges Angriffsziel',
+        warnOneClass: 'Nur eine Zeichenklasse - Groß-/Kleinbuchstaben, Zahlen & Sonderzeichen mischen',
+        warnTwoClasses: 'Nur zwei Zeichenklassen - mehr Vielfalt erhöht die Sicherheit',
+        okThreeClasses: 'Drei Zeichenklassen vorhanden',
+        okAllClasses: 'Alle Zeichenklassen vorhanden (A-Z, a-z, 0-9, Sonderzeichen)',
+        lower: '{value} Kleinbuchst.',
+        upper: '{value} Großbuchst.',
+        digits: '{value} Zahlen',
+        symbols: '{value} Sonderzeichen',
+    },
+    en: {
+        metaTitle: 'Password Strength Tester | Lotus IT-Services',
+        metaDescription: 'Test your password strength directly in the browser - no server call, no data sharing. Entropy analysis, pattern detection and concrete tips.',
+        ogLocale: 'en_US',
+        schemaName: 'Password Strength Tester',
+        schemaDescription: 'Test your password strength directly in the browser',
+        title: 'Password Strength Tester',
+        subtitle: 'Analysis runs directly in the browser - without a network connection',
+        trust: 'No server call - your password never leaves your browser',
+        inputPlaceholder: 'Enter password here…',
+        inputAria: 'Enter password',
+        show: 'Show',
+        hide: 'Hide',
+        showAria: 'Show password',
+        hideAria: 'Hide password',
+        warningsAria: 'Warnings',
+        positivesAria: 'Positives',
+        navGenerator: 'Password generator',
+        navHash: 'Hash generator',
+        toolNavAria: 'Other tools',
+        home: '← Back to home',
+        veryWeak: 'Very weak',
+        weak: 'Weak',
+        medium: 'Medium',
+        strong: 'Strong',
+        veryStrong: 'Very strong',
+        bitEntropy: '{value} bits of entropy',
+        warnTop: 'One of the most common passwords - tried first by every attacker',
+        warnTooShort: 'Too short ({value} characters) - at least 12 recommended',
+        warnBorderline: 'Borderline length - 12+ characters increase security significantly',
+        okLong: 'Very good length (≥ 20 characters)',
+        okGood: 'Good length (≥ 12 characters)',
+        warnKeyboard: 'Keyboard pattern detected (for example "qwerty", "asdf", "1234")',
+        warnSequence: 'Sequence detected (for example "abcd", "1234", "9876")',
+        warnRepeat: 'Repeated characters detected (for example "aaa", "111")',
+        warnYear: 'Year detected - birth years are a common attack target',
+        warnOneClass: 'Only one character class - mix uppercase, lowercase, digits and symbols',
+        warnTwoClasses: 'Only two character classes - more variety increases security',
+        okThreeClasses: 'Three character classes present',
+        okAllClasses: 'All character classes present (A-Z, a-z, 0-9, symbols)',
+        lower: '{value} lowercase',
+        upper: '{value} uppercase',
+        digits: '{value} digits',
+        symbols: '{value} symbols',
+    },
+};
+
+const pwdInput = document.getElementById('pwd-input');
+const toggleBtn = document.getElementById('toggle-visibility');
+const strengthBar = document.getElementById('strength-bar');
 const strengthLabel = document.getElementById('strength-label');
-const entropyLabel  = document.getElementById('entropy-label');
-const warningsList  = document.getElementById('warnings-list');
+const entropyLabel = document.getElementById('entropy-label');
+const warningsList = document.getElementById('warnings-list');
 const positivesList = document.getElementById('positives-list');
-const charStats     = document.getElementById('char-stats');
+const charStats = document.getElementById('char-stats');
+
+let currentLang = 'de';
 
 // ~150 häufigste Passwörter (EN + DE), case-insensitiv geprüft
 const TOP_PASSWORDS = new Set([
@@ -37,6 +132,91 @@ const KEYBOARD_ROWS = [
     'qwertzuiop', 'yxcvbnm',
     '1234567890', '0987654321',
 ];
+
+function getPreferredLang() {
+    const params = new URLSearchParams(window.location.search);
+    const requested = params.get('lang');
+    if (requested === 'de' || requested === 'en') return requested;
+    const stored = localStorage.getItem('lang');
+    if (stored === 'de' || stored === 'en') return stored;
+    return 'de';
+}
+
+function t(key, vars = {}) {
+    const template = TRANSLATIONS[currentLang][key] || '';
+    return template.replace(/\{(\w+)\}/g, (_, name) => vars[name] ?? '');
+}
+
+function localizeHref(path) {
+    return `${path}?lang=${currentLang}`;
+}
+
+function updateMeta() {
+    const copy = TRANSLATIONS[currentLang];
+
+    document.documentElement.lang = currentLang;
+    document.title = copy.metaTitle;
+
+    const selectors = {
+        'meta[name="description"]': copy.metaDescription,
+        'meta[property="og:title"]': copy.metaTitle,
+        'meta[property="og:description"]': copy.metaDescription,
+        'meta[property="og:locale"]': copy.ogLocale,
+        'meta[property="twitter:title"]': copy.metaTitle,
+        'meta[property="twitter:description"]': copy.metaDescription,
+    };
+
+    Object.entries(selectors).forEach(([selector, value]) => {
+        const element = document.querySelector(selector);
+        if (element) element.setAttribute('content', value);
+    });
+
+    const schemaScript = document.querySelector('script[type="application/ld+json"]');
+    if (schemaScript) {
+        try {
+            const schema = JSON.parse(schemaScript.textContent);
+            schema.name = copy.schemaName;
+            schema.description = copy.schemaDescription;
+            schemaScript.textContent = JSON.stringify(schema, null, 2);
+        } catch {
+            // Ignore invalid structured data.
+        }
+    }
+}
+
+function updateToggleButton() {
+    const isHidden = pwdInput.type === 'password';
+    toggleBtn.textContent = isHidden ? t('show') : t('hide');
+    toggleBtn.setAttribute('aria-label', isHidden ? t('showAria') : t('hideAria'));
+}
+
+function applyTranslations() {
+    currentLang = getPreferredLang();
+    localStorage.setItem('lang', currentLang);
+
+    updateMeta();
+
+    document.querySelector('.tool-container h1').textContent = TRANSLATIONS[currentLang].title;
+    document.querySelector('.tool-subtitle').textContent = TRANSLATIONS[currentLang].subtitle;
+    document.querySelector('.trust-badge span').textContent = TRANSLATIONS[currentLang].trust;
+    pwdInput.placeholder = TRANSLATIONS[currentLang].inputPlaceholder;
+    pwdInput.setAttribute('aria-label', TRANSLATIONS[currentLang].inputAria);
+    warningsList.setAttribute('aria-label', TRANSLATIONS[currentLang].warningsAria);
+    positivesList.setAttribute('aria-label', TRANSLATIONS[currentLang].positivesAria);
+    updateToggleButton();
+
+    const toolNav = document.querySelector('.tool-nav');
+    toolNav.setAttribute('aria-label', TRANSLATIONS[currentLang].toolNavAria);
+    const navLinks = toolNav.querySelectorAll('a');
+    navLinks[0].textContent = TRANSLATIONS[currentLang].navGenerator;
+    navLinks[0].href = localizeHref('generator.html');
+    navLinks[1].textContent = TRANSLATIONS[currentLang].navHash;
+    navLinks[1].href = localizeHref('hash.html');
+
+    const homeLink = document.querySelector('.nav-link');
+    homeLink.textContent = TRANSLATIONS[currentLang].home;
+    homeLink.href = localizeHref('index.html');
+}
 
 function getCharsetSize(pwd) {
     let size = 0;
@@ -97,59 +277,59 @@ function analyzePassword(pwd) {
 
     // Häufiges Passwort
     if (TOP_PASSWORDS.has(pwd.toLowerCase())) {
-        warnings.push('Eines der häufigsten Passwörter — wird von jedem Angreifer als Erstes ausprobiert');
+        warnings.push(t('warnTop'));
         penaltyBits += 200;
     }
 
     // Länge
     if (pwd.length < 8) {
-        warnings.push(`Zu kurz (${pwd.length} Zeichen) — mindestens 12 empfohlen`);
+        warnings.push(t('warnTooShort', { value: pwd.length }));
         penaltyBits += 30;
     } else if (pwd.length < 12) {
-        warnings.push('Länge grenzwertig — 12+ Zeichen erhöhen die Sicherheit deutlich');
+        warnings.push(t('warnBorderline'));
         penaltyBits += 10;
     } else if (pwd.length >= 20) {
-        positives.push('Sehr gute Länge (≥ 20 Zeichen)');
+        positives.push(t('okLong'));
     } else {
-        positives.push('Gute Länge (≥ 12 Zeichen)');
+        positives.push(t('okGood'));
     }
 
     // Tastaturmuster
     if (hasKeyboardWalk(pwd)) {
-        warnings.push('Tastatur-Muster erkannt (z. B. "qwerty", "asdf", "1234")');
+        warnings.push(t('warnKeyboard'));
         penaltyBits += 30;
     }
 
     // Zeichenfolge
     if (hasSequential(pwd)) {
-        warnings.push('Zeichenfolge erkannt (z. B. "abcd", "1234", "9876")');
+        warnings.push(t('warnSequence'));
         penaltyBits += 25;
     }
 
     // Wiederholte Zeichen
     if (hasRepeatedChars(pwd)) {
-        warnings.push('Wiederholte Zeichen erkannt (z. B. "aaa", "111")');
+        warnings.push(t('warnRepeat'));
         penaltyBits += 15;
     }
 
     // Jahreszahl
     if (hasYearPattern(pwd)) {
-        warnings.push('Jahreszahl erkannt — Geburtsjahre sind ein häufiges Angriffsziel');
+        warnings.push(t('warnYear'));
         penaltyBits += 10;
     }
 
     // Zeichenklassen
     const typeCount = getCharTypeCount(pwd);
     if (typeCount === 1) {
-        warnings.push('Nur eine Zeichenklasse — Groß-/Kleinbuchstaben, Zahlen & Sonderzeichen mischen');
+        warnings.push(t('warnOneClass'));
         penaltyBits += 20;
     } else if (typeCount === 2) {
-        warnings.push('Nur zwei Zeichenklassen — mehr Vielfalt erhöht die Sicherheit');
+        warnings.push(t('warnTwoClasses'));
         penaltyBits += 10;
     } else if (typeCount === 3) {
-        positives.push('Drei Zeichenklassen vorhanden');
+        positives.push(t('okThreeClasses'));
     } else {
-        positives.push('Alle Zeichenklassen vorhanden (A–Z, a–z, 0–9, Sonderzeichen)');
+        positives.push(t('okAllClasses'));
     }
 
     const rawEntropy      = calcEntropy(pwd);
@@ -157,15 +337,15 @@ function analyzePassword(pwd) {
 
     let level, label, color;
     if (adjustedEntropy < 20 || pwd.length < 6) {
-        level = 1; label = 'Sehr schwach'; color = '#e74c3c';
+        level = 1; label = t('veryWeak'); color = '#e74c3c';
     } else if (adjustedEntropy < 35) {
-        level = 2; label = 'Schwach';      color = '#e67e22';
+        level = 2; label = t('weak');      color = '#e67e22';
     } else if (adjustedEntropy < 55) {
-        level = 3; label = 'Mittel';       color = '#f1c40f';
+        level = 3; label = t('medium');    color = '#f1c40f';
     } else if (adjustedEntropy < 75) {
-        level = 4; label = 'Stark';        color = '#2ecc71';
+        level = 4; label = t('strong');    color = '#2ecc71';
     } else {
-        level = 5; label = 'Sehr stark';   color = '#27ae60';
+        level = 5; label = t('veryStrong'); color = '#27ae60';
     }
 
     return { rawEntropy, level, label, color, warnings, positives };
@@ -188,7 +368,7 @@ function updateUI(result) {
     strengthBar.style.width           = `${(level / 5) * 100}%`;
     strengthBar.style.backgroundColor = color;
     strengthLabel.textContent         = label;
-    entropyLabel.textContent          = `${rawEntropy} Bit Entropie`;
+    entropyLabel.textContent          = t('bitEntropy', { value: rawEntropy });
 
     warningsList.innerHTML = warnings
         .map(w => `<li class="fb-item fb-warn"><span aria-hidden="true">✗</span>${w}</li>`)
@@ -205,10 +385,10 @@ function updateUI(result) {
     const sym   = pwd.length - lower - upper - digit;
 
     charStats.innerHTML = [
-        lower ? `<span>${lower} Kleinbuchst.</span>` : '',
-        upper ? `<span>${upper} Großbuchst.</span>`  : '',
-        digit ? `<span>${digit} Zahlen</span>`        : '',
-        sym   ? `<span>${sym} Sonderzeichen</span>`   : '',
+        lower ? `<span>${t('lower', { value: lower })}</span>` : '',
+        upper ? `<span>${t('upper', { value: upper })}</span>` : '',
+        digit ? `<span>${t('digits', { value: digit })}</span>` : '',
+        sym   ? `<span>${t('symbols', { value: sym })}</span>` : '',
     ].filter(Boolean).join(' · ');
 }
 
@@ -216,7 +396,9 @@ pwdInput.addEventListener('input', () => updateUI(analyzePassword(pwdInput.value
 
 toggleBtn.addEventListener('click', () => {
     const isHidden = pwdInput.type === 'password';
-    pwdInput.type         = isHidden ? 'text' : 'password';
-    toggleBtn.textContent = isHidden ? 'Verbergen' : 'Anzeigen';
-    toggleBtn.setAttribute('aria-label', isHidden ? 'Passwort verbergen' : 'Passwort anzeigen');
+    pwdInput.type = isHidden ? 'text' : 'password';
+    updateToggleButton();
 });
+
+applyTranslations();
+updateUI(analyzePassword(pwdInput.value));

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" role="img" aria-labelledby="title desc">
+  <title id="title">Illustration zur Sichtbarkeit</title>
+  <desc id="desc">Szene mit Weg, Schaufensterkarten und aufgehender Sonne fuer Sichtbarkeit, klare Wege und Vermarktung.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fffaf4"/>
+      <stop offset="100%" stop-color="#f4f0fb"/>
+    </linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f4d35e"/>
+      <stop offset="100%" stop-color="#ffb877"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="640" fill="url(#bg)"/>
+  <circle cx="728" cy="116" r="84" fill="url(#sun)" opacity="0.9"/>
+  <path d="M0 503c81-61 170-82 280-66 95 13 134 58 230 64 86 5 143-24 215-33 103-13 181 15 235 94v78H0z" fill="#e4efe3"/>
+  <path d="M483 640H280c10-84 90-152 204-178 62-14 154-14 225 0 92 18 184 78 223 178H483z" fill="#f7e1ea" opacity="0.75"/>
+  <path d="M489 640H356c19-120 86-214 136-214s116 94 135 214z" fill="#fffaf3"/>
+  <path d="M485 372c-25 0-45-21-45-46s20-46 45-46 45 21 45 46-20 46-45 46z" fill="#f5c2ad"/>
+  <path d="M438 326c0-38 21-70 47-70 27 0 48 32 48 70-15-13-32-19-48-19-18 0-31 5-47 19z" fill="#3e3155"/>
+  <path d="M322 242c0-34 28-62 62-62h123c34 0 62 28 62 62v109c0 34-28 62-62 62H384c-34 0-62-28-62-62z" fill="#ffffff" stroke="#e9deef" stroke-width="8"/>
+  <path d="M372 254h146" stroke="#a06bd6" stroke-width="12" stroke-linecap="round"/>
+  <path d="M372 297h118" stroke="#e56f9f" stroke-width="12" stroke-linecap="round"/>
+  <path d="M372 340h166" stroke="#8caf67" stroke-width="12" stroke-linecap="round"/>
+  <g transform="translate(664 226)">
+    <rect x="0" y="0" width="170" height="128" rx="26" fill="#fffdf9" stroke="#eadfd3" stroke-width="6"/>
+    <path d="M34 42h98" stroke="#5f9f86" stroke-width="10" stroke-linecap="round"/>
+    <path d="M34 74h72" stroke="#46b6c8" stroke-width="10" stroke-linecap="round"/>
+    <path d="M34 102h110" stroke="#f4d35e" stroke-width="10" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(106 264)">
+    <rect x="0" y="0" width="150" height="116" rx="24" fill="#fffdf9" stroke="#e5ddd1" stroke-width="6"/>
+    <path d="M28 40h92" stroke="#e56f9f" stroke-width="10" stroke-linecap="round"/>
+    <path d="M28 72h64" stroke="#a06bd6" stroke-width="10" stroke-linecap="round"/>
+    <path d="M28 98h82" stroke="#8caf67" stroke-width="10" stroke-linecap="round"/>
+  </g>
+</svg>

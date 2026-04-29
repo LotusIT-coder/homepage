@@ -1,0 +1,14 @@
+# Server-/Auth-Konfiguration – niemals ins Repo
+.htpasswd
+.htaccess
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Logs
+*.log
