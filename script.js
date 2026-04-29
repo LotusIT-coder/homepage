@@ -504,8 +504,8 @@ if (form) form.addEventListener('submit', (e) => {
   const IMG_H = 1024;
   // Berührungspunkt zwischen menschlichem Zeigefinger (links)
   // und Roboter-Zeigefinger – empirisch aus der Grafik abgelesen.
-  const TOUCH_X = 0.305;
-  const TOUCH_Y = 0.455;
+  const TOUCH_X = 0.365;
+  const TOUCH_Y = 0.475;
   const ARROW_HEIGHT = 184; // wie in CSS .contact-energy-arrow
   const POINT_OFFSET = 17;  // Hälfte des .contact-energy-point (35/2)
 
