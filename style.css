@@ -1004,8 +1004,11 @@ a { color: var(--text); text-decoration: none; transition: color var(--transitio
 
 .contact-energy-hotspot {
   position: absolute;
-  left: calc(50% - 5px);
-  top: calc(clamp(96px, 16vh, 132px) + 40px);
+  /* left/top werden in script.js dynamisch gesetzt, damit der Punkt
+     unabhängig von der Viewport-Größe genau zwischen den Fingerspitzen
+     der Hommage-Grafik liegt (background: cover). */
+  left: 50%;
+  top: 0;
   z-index: 4;
   width: 96px;
   height: 226px;
@@ -2117,7 +2120,6 @@ select option { background: var(--bg-card); }
   #kontakt .section-header { transform: translateY(-36px); }
   #kontakt > .container { min-height: clamp(560px, 72vh, 680px); }
   .contact-energy-hotspot {
-    top: calc(clamp(86px, 16vh, 118px) - 10px);
     height: 198px;
   }
   .contact-energy-arrow {

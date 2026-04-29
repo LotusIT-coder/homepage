@@ -491,3 +491,66 @@ if (form) form.addEventListener('submit', (e) => {
     });
   });
 })();
+
+// ── Kontakt-Hotspot: Position exakt zwischen die Fingerspitzen
+//    der Hommage-Hintergrundgrafik legen (background: cover) ──
+(function () {
+  const hotspot = document.querySelector('#kontakt .contact-energy-hotspot');
+  const section = document.getElementById('kontakt');
+  if (!hotspot || !section) return;
+
+  // Bild-Maße + Berührungspunkt der Fingerspitzen (Bruchteile von B/H)
+  const IMG_W = 1536;
+  const IMG_H = 1024;
+  const TOUCH_X = 0.664;   // 66.4 % von links
+  const TOUCH_Y = 0.513;   // 51.3 % von oben
+  const ARROW_HEIGHT = 184; // wie in CSS .contact-energy-arrow
+  const POINT_OFFSET = 17;  // Hälfte des .contact-energy-point (35/2)
+
+  const place = () => {
+    const rect = section.getBoundingClientRect();
+    const cw = rect.width;
+    const ch = rect.height;
+    if (cw === 0 || ch === 0) return;
+
+    const imgAR = IMG_W / IMG_H;
+    const containerAR = cw / ch;
+
+    let scale, offsetX, offsetY;
+    if (containerAR > imgAR) {
+      // Container breiter als Bild: Bild wird auf cw skaliert, oben/unten abgeschnitten
+      scale = cw / IMG_W;
+      offsetX = 0;
+      offsetY = (ch - IMG_H * scale) / 2;
+    } else {
+      // Container schmaler: Bild wird auf ch skaliert, links/rechts abgeschnitten
+      scale = ch / IMG_H;
+      offsetX = (cw - IMG_W * scale) / 2;
+      offsetY = 0;
+    }
+
+    const targetX = offsetX + TOUCH_X * IMG_W * scale;
+    const targetY = offsetY + TOUCH_Y * IMG_H * scale;
+
+    // Punkt-Mittelpunkt innerhalb des Hotspots aus dem CSS lesen,
+    // damit Mobile- und Desktop-Größen automatisch berücksichtigt sind.
+    const point = hotspot.querySelector('.contact-energy-point');
+    let pointCenterY = ARROW_HEIGHT + POINT_OFFSET;
+    if (point) {
+      const cs = getComputedStyle(point);
+      const pTop = parseFloat(cs.top) || ARROW_HEIGHT;
+      const pH = point.offsetHeight || (POINT_OFFSET * 2);
+      pointCenterY = pTop + pH / 2;
+    }
+
+    hotspot.style.left = `${targetX}px`;
+    hotspot.style.top = `${targetY - pointCenterY}px`;
+  };
+
+  place();
+  window.addEventListener('resize', place, { passive: true });
+  window.addEventListener('load', place);
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(place).observe(section);
+  }
+})();
