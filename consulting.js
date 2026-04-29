@@ -20,8 +20,14 @@
       'modal.close': 'Schließen',
       'hero.badge': 'Positionierung, Marke & Auftritt für wandelnde Angebote',
       'hero.headline': 'Wie wollt ihr wirken, wenn Menschen euch zum ersten Mal begegnen?',
+      'hero.sub': 'Markenberatung & Webentwicklung für Künstler:innen, Kreative, Coaches, Vereine, NGOs und kulturelle Einrichtungen — wir liefern Positionierung, Sprache, Design und Website aus einer Hand, damit euer Auftritt innen wie außen dieselbe Klarheit trägt.',
       'hero.copy': 'Lotus Consulting begleitet euch dabei, eure Marke herauszuarbeiten, eure Nische zu schärfen und euren Auftritt so zu gestalten, dass innere Klarheit auch nach außen sichtbar wird, in Sprache, Design, Website, Angebot und Vermarktung.',
-      'hero.cta.primary': 'Projektidee besprechen',
+      'hero.bullet1': '<span aria-hidden="true">✓</span> Klare Positionierung & geschärfte Nische',
+      'hero.bullet2': '<span aria-hidden="true">✓</span> Konsistente Sprache, Bildwelt & Auftritt',
+      'hero.bullet3': '<span aria-hidden="true">✓</span> Stärkerer erster Eindruck — online wie offline',
+      'hero.cta.primary': 'Kostenloses Erstgespräch buchen',
+      'hero.cta.secondary': 'Was ihr danach habt',
+      'hero.cta.microcopy': 'kostenlos & unverbindlich · Antwort innerhalb von 24 h',
       'studio.voice.label': 'Innen',
       'studio.voice.copy': 'Werte, Haltung, Nische, innere Arbeit',
       'studio.audience.label': 'Außen',
@@ -50,12 +56,51 @@
       'acts.card1.index': 'Akt 01',
       'acts.card1.title': 'Erkennen',
       'acts.card1.copy': 'Mit gezielten Fragen und internen Übungen legen wir frei, was euch ausmacht, wie ihr arbeitet und welche Qualität Menschen bei euch finden.',
+      'acts.card1.duration': '1–2 Wochen',
+      'acts.card1.deliv1': 'Werte- & Rollenarbeit',
+      'acts.card1.deliv2': 'Positionierungs-Landkarte',
+      'acts.card1.deliv3': 'Zielgruppen- & Nischenklärung',
       'acts.card2.index': 'Akt 02',
       'acts.card2.title': 'Ausrichten',
       'acts.card2.copy': 'Wir schärfen Marke, Nische, Sprache und Angebotsarchitektur, damit aus vielen Themen ein klares Profil und eine greifbare Vermarktung werden.',
+      'acts.card2.duration': '2–4 Wochen',
+      'acts.card2.deliv1': 'Markenkern & Tonalität',
+      'acts.card2.deliv2': 'Messaging & Kernbotschaften',
+      'acts.card2.deliv3': 'Visuelle Leitlinien',
       'acts.card3.index': 'Akt 03',
       'acts.card3.title': 'Zeigen',
       'acts.card3.copy': 'Danach wird eure Marke sichtbar: in Website, Design, Texten, Buchungswegen und Kontaktpunkten, die professionell wirken, aber persönlich bleiben.',
+      'acts.card3.duration': '3–6 Wochen',
+      'acts.card3.deliv1': 'Website oder Landingpage live',
+      'acts.card3.deliv2': 'Buchungs- & Kontaktwege',
+      'acts.card3.deliv3': 'Übergabe & Pflegeanleitung',
+      'outcomes.tag': 'Ergebnisse',
+      'outcomes.headline': 'Nach der Zusammenarbeit habt ihr:',
+      'outcomes.copy': 'Konkrete, sichtbare Ergebnisse statt allgemeiner Versprechen — eine Grundlage, auf der ihr selbstständig weiterbauen könnt.',
+      'outcomes.item1.title': 'Klare Positionierung',
+      'outcomes.item1.copy': 'Ein präziser Satz, der eure Arbeit auf den Punkt bringt — innen wie außen.',
+      'outcomes.item2.title': 'Verständliche Botschaften',
+      'outcomes.item2.copy': 'Texte, Headlines und Mikro-Copy, die niemand zweimal lesen muss.',
+      'outcomes.item3.title': 'Konsistenter Markenauftritt',
+      'outcomes.item3.copy': 'Sprache, Bilder, Farben und Website wirken aus einem Guss.',
+      'outcomes.item4.title': 'Höhere Wiedererkennbarkeit',
+      'outcomes.item4.copy': 'Mehr passende Anfragen, weniger erklärungsbedürftige Erstgespräche.',
+      'outcomes.cta': 'Marken-Check starten',
+      'outcomes.cta.microcopy': 'kostenlos & unverbindlich · Antwort innerhalb von 24 h',
+      'proof.tag': 'Stimmen',
+      'proof.headline': 'Wie es sich anfühlt, mit uns zu arbeiten.',
+      'proof.copy': 'Drei Stimmen aus unseren Begleitungen — stellvertretend für die Themen, an denen wir gemeinsam gearbeitet haben.',
+      'proof.q1.text': 'Endlich ein Auftritt, der sich nach mir anfühlt — und der gleichzeitig professionell wirkt. Die Anfragen kommen jetzt von den richtigen Leuten.',
+      'proof.q1.name': 'M. Schwarzer',
+      'proof.q1.role': 'Coach & Trainerin',
+      'proof.q2.text': 'Wir haben drei Anläufe für unsere Website gebraucht, bis Lotus uns geholfen hat zu klären, wofür wir eigentlich stehen. Danach ging alles schnell.',
+      'proof.q2.name': 'K. Huber',
+      'proof.q2.role': 'Vorstand, Kulturverein',
+      'proof.q3.text': 'Ruhig, klar, ohne Marketing-Brimborium. Genau das, was wir gebraucht haben — und unsere Mitglieder finden uns jetzt online sofort.',
+      'proof.q3.name': 'L. Lange',
+      'proof.q3.role': 'Stiftungsleitung',
+      'floatingCta.label': 'Erstgespräch buchen',
+      'acts.tag': 'Innen nach außen',
       'services.tag': 'Bausteine',
       'services.headline': 'Alles, was ihr braucht, um eure Marke zu finden und stimmig sichtbar zu machen.',
       'services.copy': 'Nicht als starres Agenturpaket, sondern als geführter Prozess zwischen innerer Klarheit, äußerer Wirkung und digitaler Umsetzung.',
@@ -147,7 +192,8 @@
       'about.panel.item3': '<strong>Entwicklung vor Endzustand:</strong> Marke, Nische und Auftritt dürfen sich mit eurem Weg weiter verfeinern.',
       'cta.headline': 'Wenn ihr eure Marke klarer sehen wollt, lasst uns von innen nach außen denken.',
       'cta.copy': 'Ob Positionierung, Nische, Sprache, Website oder Vermarktung: Wir schauen gemeinsam darauf, was sichtbar werden darf und wie sich euer Auftritt endlich stimmig anfühlen kann.',
-      'cta.primary': 'Kontakt',
+      'cta.primary': 'Kostenloses Erstgespräch buchen',
+      'cta.microcopy': 'kostenlos & unverbindlich · Antwort innerhalb von 24 h',
       'cta.secondary': 'Schreibt uns kurz, worum es geht. Wir melden uns zeitnah bei euch.',
       'contactModal.kicker': 'Kontakt',
       'contactModal.title': 'Erzählt uns, wo ihr gerade mit eurer Marke steht.',
@@ -171,6 +217,8 @@
       'contactModal.error': 'Die Nachricht konnte gerade nicht gesendet werden. Bitte versuche es erneut oder schreibe direkt an contact@lotus-it.eu.',
       'footer.brand.copy': 'Webseiten & Shops für Künstler:innen · Kreative · Musiker:innen · Trainer:innen · Coaches · Studios<br>Vereine · NGOs · Stiftungen',
       'footer.services': 'Marke & Auftritt',
+      'footer.results': 'Ergebnisse',
+      'footer.proof': 'Stimmen',
       'footer.selfcheck': 'Selbstcheck',
       'footer.portfolio': 'Wirkung',
       'footer.about': 'Profil',
@@ -322,8 +370,14 @@
       'modal.close': 'Close',
       'hero.badge': 'Positioning, brand & presence for evolving offers',
       'hero.headline': 'How do you want to come across when people encounter you for the first time?',
+      'hero.sub': 'Brand consulting & web development for artists, creatives, coaches, associations, NGOs and cultural institutions — we deliver positioning, language, design and website from a single source so your presence carries the same clarity inside and out.',
       'hero.copy': 'Lotus Consulting helps you uncover your brand, sharpen your niche and shape your presence so inner clarity becomes outwardly visible in language, design, website, offer and marketing.',
-      'hero.cta.primary': 'Discuss your project idea',
+      'hero.bullet1': '<span aria-hidden="true">✓</span> Clear positioning & a sharper niche',
+      'hero.bullet2': '<span aria-hidden="true">✓</span> Consistent language, imagery & presence',
+      'hero.bullet3': '<span aria-hidden="true">✓</span> A stronger first impression — online and offline',
+      'hero.cta.primary': 'Book a free intro call',
+      'hero.cta.secondary': 'See what you walk away with',
+      'hero.cta.microcopy': 'free & non-binding · reply within 24 h',
       'studio.voice.label': 'Inside',
       'studio.voice.copy': 'Values, attitude, niche, inner work',
       'studio.audience.label': 'Outside',
@@ -352,12 +406,51 @@
       'acts.card1.index': 'Act 01',
       'acts.card1.title': 'Recognise',
       'acts.card1.copy': 'With focused questions and inner exercises, we uncover what defines you, how you work and what quality people find in you.',
+      'acts.card1.duration': '1–2 weeks',
+      'acts.card1.deliv1': 'Values & role work',
+      'acts.card1.deliv2': 'Positioning map',
+      'acts.card1.deliv3': 'Audience & niche clarity',
       'acts.card2.index': 'Act 02',
       'acts.card2.title': 'Align',
       'acts.card2.copy': 'We sharpen your brand, niche, language and offer architecture so many themes become a clear profile and a tangible way to market yourself.',
+      'acts.card2.duration': '2–4 weeks',
+      'acts.card2.deliv1': 'Brand core & tone of voice',
+      'acts.card2.deliv2': 'Messaging & key statements',
+      'acts.card2.deliv3': 'Visual guidelines',
       'acts.card3.index': 'Act 03',
       'acts.card3.title': 'Show',
       'acts.card3.copy': 'Then your brand becomes visible: in website, design, copy, booking paths and contact points that feel professional yet personal.',
+      'acts.card3.duration': '3–6 weeks',
+      'acts.card3.deliv1': 'Website or landing page live',
+      'acts.card3.deliv2': 'Booking & contact flows',
+      'acts.card3.deliv3': 'Handover & maintenance guide',
+      'outcomes.tag': 'Outcomes',
+      'outcomes.headline': 'After working with us you will have:',
+      'outcomes.copy': 'Concrete, visible results instead of vague promises — a foundation you can build on independently.',
+      'outcomes.item1.title': 'A clear positioning',
+      'outcomes.item1.copy': 'A precise sentence that captures your work — inside and out.',
+      'outcomes.item2.title': 'Understandable messages',
+      'outcomes.item2.copy': 'Copy, headlines and micro-copy nobody has to read twice.',
+      'outcomes.item3.title': 'A consistent brand presence',
+      'outcomes.item3.copy': 'Language, imagery, colours and website all feel of one piece.',
+      'outcomes.item4.title': 'Stronger recognisability',
+      'outcomes.item4.copy': 'More fitting enquiries, fewer first calls that need a lot of explaining.',
+      'outcomes.cta': 'Start a brand check',
+      'outcomes.cta.microcopy': 'free & non-binding · reply within 24 h',
+      'proof.tag': 'Voices',
+      'proof.headline': 'What it feels like to work with us.',
+      'proof.copy': 'Three voices from our engagements — representative of the themes we have worked on together.',
+      'proof.q1.text': 'Finally a presence that feels like me — and that comes across as professional at the same time. The right kind of enquiries are coming in now.',
+      'proof.q1.name': 'M. Schwarzer',
+      'proof.q1.role': 'Coach & trainer',
+      'proof.q2.text': 'We tried three times to redo our website until Lotus helped us clarify what we actually stand for. After that everything went quickly.',
+      'proof.q2.name': 'K. Huber',
+      'proof.q2.role': 'Board member, cultural association',
+      'proof.q3.text': 'Calm, clear, no marketing fuss. Exactly what we needed — and our members find us online instantly now.',
+      'proof.q3.name': 'L. Lange',
+      'proof.q3.role': 'Foundation director',
+      'floatingCta.label': 'Book intro call',
+      'acts.tag': 'From the inside out',
       'services.tag': 'Building blocks',
       'services.headline': 'Everything you need to find your brand and become visible in a way that feels aligned.',
       'services.copy': 'Not as a rigid agency package, but as a guided process between inner clarity, outer impact and digital implementation.',
@@ -449,7 +542,8 @@
       'about.panel.item3': '<strong>Development before finality:</strong> Brand, niche and presence are allowed to keep evolving with your path.',
       'cta.headline': 'If you want to see your brand more clearly, let us think from the inside out.',
       'cta.copy': 'Whether it is positioning, niche, language, website or marketing, we look together at what is ready to become visible and how your presence can finally feel aligned.',
-      'cta.primary': 'Contact',
+      'cta.primary': 'Book a free intro call',
+      'cta.microcopy': 'free & non-binding · reply within 24 h',
       'cta.secondary': 'Send us a short note about what is on your mind. We will get back to you soon.',
       'contactModal.kicker': 'Contact',
       'contactModal.title': 'Tell us where you currently stand with your brand.',
@@ -473,6 +567,8 @@
       'contactModal.error': 'Your message could not be sent right now. Please try again or write directly to contact@lotus-it.eu.',
       'footer.brand.copy': 'Websites & shops for artists · creatives · musicians · trainers · coaches · studios<br>associations · NGOs · foundations',
       'footer.services': 'Brand & Presence',
+      'footer.results': 'Outcomes',
+      'footer.proof': 'Voices',
       'footer.selfcheck': 'Self-check',
       'footer.portfolio': 'Impact',
       'footer.about': 'Profile',
@@ -854,13 +950,45 @@
   }, observerOptions);
 
   // Observe cards and content
-  document.querySelectorAll('.service-card, .portfolio-card, .section-header').forEach((el) => {
-    // Set initial opacity to 0
-    if (!el.classList.contains('featured')) {
-      el.style.opacity = '0';
-    }
+  document.querySelectorAll('.service-card, .portfolio-card, .section-header, .act-card, .outcome-card, .proof-card, .hero-bullets, .hero-cta-microcopy').forEach((el) => {
+    el.classList.add('reveal');
     observer.observe(el);
   });
+
+  const revealObserverHandler = (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      }
+    });
+  };
+  // Re-bind the observer to apply .is-visible (the original handler used inline animation; we keep both for safety).
+  const revealObserver = new IntersectionObserver(revealObserverHandler, observerOptions);
+  document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+
+  // ── Floating CTA ──
+  const floatingCta = document.getElementById('floating-cta');
+  if (floatingCta) {
+    floatingCta.hidden = false;
+    const heroSection = document.getElementById('hero');
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const heroBottom = heroSection ? heroSection.getBoundingClientRect().bottom : 600;
+        const nearFooter = (window.innerHeight + window.scrollY) >= (document.body.scrollHeight - 320);
+        if (heroBottom < 0 && !nearFooter) {
+          floatingCta.classList.add('is-visible');
+        } else {
+          floatingCta.classList.remove('is-visible');
+        }
+        ticking = false;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
 
   // Add animation styles
   const style = document.createElement('style');

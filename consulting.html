@@ -11,7 +11,7 @@
   <meta name="theme-color" content="#5f9f86" />
 
   <link rel="stylesheet" href="fonts/fonts.css" />
-  <link rel="stylesheet" href="consulting.css?v=20260429a" />
+  <link rel="stylesheet" href="consulting.css?v=20260429b" />
 </head>
 <body>
 
@@ -69,12 +69,22 @@
         <div class="hero-copy">
           <div class="hero-badge" data-slot="hero.badge">Positionierung, Marke & Auftritt für wandelnde Angebote</div>
           <h1 data-slot="hero.headline">Wie wollt ihr wirken, wenn Menschen euch zum ersten Mal begegnen?</h1>
+          <p class="hero-sub" data-slot="hero.sub">
+            Markenberatung &amp; Webentwicklung für Künstler:innen, Kreative, Coaches, Vereine, NGOs und kulturelle Einrichtungen — wir liefern Positionierung, Sprache, Design und Website aus einer Hand, damit euer Auftritt innen wie außen dieselbe Klarheit trägt.
+          </p>
           <p data-slot="hero.copy">
             Lotus Consulting begleitet euch dabei, eure Marke herauszuarbeiten, eure Nische zu schärfen und euren Auftritt so zu gestalten, dass innere Klarheit auch nach außen sichtbar wird, in Sprache, Design, Website, Angebot und Vermarktung.
           </p>
+          <ul class="hero-bullets" aria-label="Was ihr von uns mitnehmt">
+            <li data-slot="hero.bullet1"><span aria-hidden="true">✓</span> Klare Positionierung &amp; geschärfte Nische</li>
+            <li data-slot="hero.bullet2"><span aria-hidden="true">✓</span> Konsistente Sprache, Bildwelt &amp; Auftritt</li>
+            <li data-slot="hero.bullet3"><span aria-hidden="true">✓</span> Stärkerer erster Eindruck — online wie offline</li>
+          </ul>
           <div class="hero-cta">
-            <a href="#contact" class="btn-primary-consulting" data-slot="hero.cta.primary">Projektidee besprechen</a>
+            <button type="button" class="btn-primary-consulting btn-large" data-modal-trigger="modal-consulting-contact" data-slot="hero.cta.primary">Kostenloses Erstgespräch buchen</button>
+            <a href="#ergebnisse" class="btn-ghost-consulting" data-slot="hero.cta.secondary">Was ihr danach habt</a>
           </div>
+          <p class="hero-cta-microcopy" data-slot="hero.cta.microcopy">kostenlos &amp; unverbindlich · Antwort innerhalb von 24&nbsp;h</p>
         </div>
 
         <div class="hero-studio-board" aria-label="Marken- und Positionierungsboard">
@@ -152,17 +162,78 @@
             <span data-slot="acts.card1.index">Akt 01</span>
             <h3 data-slot="acts.card1.title">Erkennen</h3>
             <p data-slot="acts.card1.copy">Mit gezielten Fragen und internen Übungen legen wir frei, was euch ausmacht, wie ihr arbeitet und welche Qualität Menschen bei euch finden.</p>
+            <div class="act-meta">
+              <span class="act-duration" data-slot="acts.card1.duration">1–2 Wochen</span>
+            </div>
+            <ul class="act-deliverables" aria-label="Was ihr danach habt">
+              <li data-slot="acts.card1.deliv1">Werte- &amp; Rollenarbeit</li>
+              <li data-slot="acts.card1.deliv2">Positionierungs-Landkarte</li>
+              <li data-slot="acts.card1.deliv3">Zielgruppen- &amp; Nischenklärung</li>
+            </ul>
           </article>
           <article class="act-card act-card--two">
             <span data-slot="acts.card2.index">Akt 02</span>
             <h3 data-slot="acts.card2.title">Ausrichten</h3>
             <p data-slot="acts.card2.copy">Wir schärfen Marke, Nische, Sprache und Angebotsarchitektur, damit aus vielen Themen ein klares Profil und eine greifbare Vermarktung werden.</p>
+            <div class="act-meta">
+              <span class="act-duration" data-slot="acts.card2.duration">2–4 Wochen</span>
+            </div>
+            <ul class="act-deliverables" aria-label="Was ihr danach habt">
+              <li data-slot="acts.card2.deliv1">Markenkern &amp; Tonalität</li>
+              <li data-slot="acts.card2.deliv2">Messaging &amp; Kernbotschaften</li>
+              <li data-slot="acts.card2.deliv3">Visuelle Leitlinien</li>
+            </ul>
           </article>
           <article class="act-card act-card--three">
             <span data-slot="acts.card3.index">Akt 03</span>
             <h3 data-slot="acts.card3.title">Zeigen</h3>
             <p data-slot="acts.card3.copy">Danach wird eure Marke sichtbar: in Website, Design, Texten, Buchungswegen und Kontaktpunkten, die professionell wirken, aber persönlich bleiben.</p>
+            <div class="act-meta">
+              <span class="act-duration" data-slot="acts.card3.duration">3–6 Wochen</span>
+            </div>
+            <ul class="act-deliverables" aria-label="Was ihr danach habt">
+              <li data-slot="acts.card3.deliv1">Website oder Landingpage live</li>
+              <li data-slot="acts.card3.deliv2">Buchungs- &amp; Kontaktwege</li>
+              <li data-slot="acts.card3.deliv3">Übergabe &amp; Pflegeanleitung</li>
+            </ul>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Outcomes / Ergebnisse -->
+    <section id="ergebnisse" class="outcomes-consulting">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" data-slot="outcomes.tag">Ergebnisse</span>
+          <h2 data-slot="outcomes.headline">Nach der Zusammenarbeit habt ihr:</h2>
+          <p data-slot="outcomes.copy">Konkrete, sichtbare Ergebnisse statt allgemeiner Versprechen — eine Grundlage, auf der ihr selbstständig weiterbauen könnt.</p>
+        </div>
+        <ul class="outcomes-grid">
+          <li class="outcome-card">
+            <span class="outcome-num" aria-hidden="true">01</span>
+            <h3 data-slot="outcomes.item1.title">Klare Positionierung</h3>
+            <p data-slot="outcomes.item1.copy">Ein präziser Satz, der eure Arbeit auf den Punkt bringt — innen wie außen.</p>
+          </li>
+          <li class="outcome-card">
+            <span class="outcome-num" aria-hidden="true">02</span>
+            <h3 data-slot="outcomes.item2.title">Verständliche Botschaften</h3>
+            <p data-slot="outcomes.item2.copy">Texte, Headlines und Mikro-Copy, die niemand zweimal lesen muss.</p>
+          </li>
+          <li class="outcome-card">
+            <span class="outcome-num" aria-hidden="true">03</span>
+            <h3 data-slot="outcomes.item3.title">Konsistenter Markenauftritt</h3>
+            <p data-slot="outcomes.item3.copy">Sprache, Bilder, Farben und Website wirken aus einem Guss.</p>
+          </li>
+          <li class="outcome-card">
+            <span class="outcome-num" aria-hidden="true">04</span>
+            <h3 data-slot="outcomes.item4.title">Höhere Wiedererkennbarkeit</h3>
+            <p data-slot="outcomes.item4.copy">Mehr passende Anfragen, weniger erklärungsbedürftige Erstgespräche.</p>
+          </li>
+        </ul>
+        <div class="outcomes-cta">
+          <button type="button" class="btn-primary-consulting btn-large" data-modal-trigger="modal-consulting-contact" data-slot="outcomes.cta">Marken-Check starten</button>
+          <p class="cta-microcopy" data-slot="outcomes.cta.microcopy">kostenlos &amp; unverbindlich · Antwort innerhalb von 24&nbsp;h</p>
         </div>
       </div>
     </section>
@@ -314,6 +385,43 @@
       </div>
     </section>
 
+    <!-- Social Proof / Stimmen (Platzhalter — durch echte Zitate ersetzen) -->
+    <section id="stimmen" class="proof-consulting">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" data-slot="proof.tag">Stimmen</span>
+          <h2 data-slot="proof.headline">Wie es sich anfühlt, mit uns zu arbeiten.</h2>
+          <p data-slot="proof.copy">Drei Stimmen aus unseren Begleitungen — stellvertretend für die Themen, an denen wir gemeinsam gearbeitet haben.</p>
+        </div>
+        <div class="proof-grid">
+          <figure class="proof-card">
+            <svg class="proof-quote" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M7.17 6C4.86 6 3 7.86 3 10.17v6.66c0 .73.59 1.32 1.33 1.32h4.34c.74 0 1.33-.59 1.33-1.32v-4.34c0-.73-.59-1.32-1.33-1.32H6c.04-1.43 1.18-2.59 2.61-2.62A.7.7 0 0 0 9.3 7.9V6.7a.7.7 0 0 0-.7-.7H7.17Zm10 0c-2.31 0-4.17 1.86-4.17 4.17v6.66c0 .73.59 1.32 1.33 1.32h4.34c.74 0 1.33-.59 1.33-1.32v-4.34c0-.73-.59-1.32-1.33-1.32H16c.04-1.43 1.18-2.59 2.61-2.62A.7.7 0 0 0 19.3 7.9V6.7a.7.7 0 0 0-.7-.7h-1.43Z"/></svg>
+            <blockquote data-slot="proof.q1.text">Endlich ein Auftritt, der sich nach mir anfühlt — und der gleichzeitig professionell wirkt. Die Anfragen kommen jetzt von den richtigen Leuten.</blockquote>
+            <figcaption>
+              <strong data-slot="proof.q1.name">M. Schwarzer</strong>
+              <span data-slot="proof.q1.role">Coach &amp; Trainerin</span>
+            </figcaption>
+          </figure>
+          <figure class="proof-card">
+            <svg class="proof-quote" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M7.17 6C4.86 6 3 7.86 3 10.17v6.66c0 .73.59 1.32 1.33 1.32h4.34c.74 0 1.33-.59 1.33-1.32v-4.34c0-.73-.59-1.32-1.33-1.32H6c.04-1.43 1.18-2.59 2.61-2.62A.7.7 0 0 0 9.3 7.9V6.7a.7.7 0 0 0-.7-.7H7.17Zm10 0c-2.31 0-4.17 1.86-4.17 4.17v6.66c0 .73.59 1.32 1.33 1.32h4.34c.74 0 1.33-.59 1.33-1.32v-4.34c0-.73-.59-1.32-1.33-1.32H16c.04-1.43 1.18-2.59 2.61-2.62A.7.7 0 0 0 19.3 7.9V6.7a.7.7 0 0 0-.7-.7h-1.43Z"/></svg>
+            <blockquote data-slot="proof.q2.text">Wir haben drei Anläufe für unsere Website gebraucht, bis Lotus uns geholfen hat zu klären, wofür wir eigentlich stehen. Danach ging alles schnell.</blockquote>
+            <figcaption>
+              <strong data-slot="proof.q2.name">K. Huber</strong>
+              <span data-slot="proof.q2.role">Vorstand, Kulturverein</span>
+            </figcaption>
+          </figure>
+          <figure class="proof-card">
+            <svg class="proof-quote" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M7.17 6C4.86 6 3 7.86 3 10.17v6.66c0 .73.59 1.32 1.33 1.32h4.34c.74 0 1.33-.59 1.33-1.32v-4.34c0-.73-.59-1.32-1.33-1.32H6c.04-1.43 1.18-2.59 2.61-2.62A.7.7 0 0 0 9.3 7.9V6.7a.7.7 0 0 0-.7-.7H7.17Zm10 0c-2.31 0-4.17 1.86-4.17 4.17v6.66c0 .73.59 1.32 1.33 1.32h4.34c.74 0 1.33-.59 1.33-1.32v-4.34c0-.73-.59-1.32-1.33-1.32H16c.04-1.43 1.18-2.59 2.61-2.62A.7.7 0 0 0 19.3 7.9V6.7a.7.7 0 0 0-.7-.7h-1.43Z"/></svg>
+            <blockquote data-slot="proof.q3.text">Ruhig, klar, ohne Marketing-Brimborium. Genau das, was wir gebraucht haben — und unsere Mitglieder finden uns jetzt online sofort.</blockquote>
+            <figcaption>
+              <strong data-slot="proof.q3.name">L. Lange</strong>
+              <span data-slot="proof.q3.role">Stiftungsleitung</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
     <!-- About -->
     <section id="about" class="about-consulting">
       <div class="container about-grid">
@@ -347,8 +455,9 @@
             Ob Positionierung, Nische, Sprache, Website oder Vermarktung: Wir schauen gemeinsam darauf, was sichtbar werden darf und wie sich euer Auftritt endlich stimmig anfühlen kann.
           </p>
           <button type="button" class="btn-primary-consulting btn-large" data-modal-trigger="modal-consulting-contact" data-slot="cta.primary">
-            Kontakt
+            Kostenloses Erstgespräch buchen
           </button>
+          <p class="cta-microcopy" data-slot="cta.microcopy">kostenlos &amp; unverbindlich · Antwort innerhalb von 24&nbsp;h</p>
           <p class="cta-secondary" data-slot="cta.secondary">
             Schreibt uns kurz, worum es geht. Wir melden uns zeitnah bei euch.
           </p>
@@ -646,7 +755,8 @@
       </div>
       <div class="footer-links">
         <a href="#services" data-slot="footer.services">Marke & Auftritt</a>
-        <a href="#diagnose" data-slot="footer.selfcheck">Selbstcheck</a>
+        <a href="#ergebnisse" data-slot="footer.results">Ergebnisse</a>
+        <a href="#stimmen" data-slot="footer.proof">Stimmen</a>
         <a href="#portfolio" data-slot="footer.portfolio">Wirkung</a>
         <a href="#about" data-slot="footer.about">Profil</a>
         <a href="#contact" data-slot="footer.contact">Kontakt</a>
@@ -659,6 +769,11 @@
     <p class="footer-copy" data-slot="footer.copy">© 2026 Lotus Consulting · Alle Rechte vorbehalten</p>
   </footer>
 
-  <script src="consulting.js?v=20260429a"></script>
+  <!-- Floating CTA (erscheint nach Hero) -->
+  <button type="button" id="floating-cta" class="floating-cta" data-modal-trigger="modal-consulting-contact" data-slot="floatingCta.label" aria-label="Kostenloses Erstgespräch buchen" hidden>
+    Erstgespräch buchen
+  </button>
+
+  <script src="consulting.js?v=20260429b"></script>
 </body>
 </html>
