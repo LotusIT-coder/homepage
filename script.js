@@ -502,8 +502,10 @@ if (form) form.addEventListener('submit', (e) => {
   // Bild-Maße + Berührungspunkt der Fingerspitzen (Bruchteile von B/H)
   const IMG_W = 1536;
   const IMG_H = 1024;
-  const TOUCH_X = 0.664;   // 66.4 % von links
-  const TOUCH_Y = 0.513;   // 51.3 % von oben
+  // Berührungspunkt zwischen menschlichem Zeigefinger (links)
+  // und Roboter-Zeigefinger – empirisch aus der Grafik abgelesen.
+  const TOUCH_X = 0.305;
+  const TOUCH_Y = 0.455;
   const ARROW_HEIGHT = 184; // wie in CSS .contact-energy-arrow
   const POINT_OFFSET = 17;  // Hälfte des .contact-energy-point (35/2)
 
@@ -543,7 +545,9 @@ if (form) form.addEventListener('submit', (e) => {
       pointCenterY = pTop + pH / 2;
     }
 
-    hotspot.style.left = `${targetX}px`;
+    // Hotspot horizontal mittig auf den Berührungspunkt setzen.
+    const hotspotW = hotspot.offsetWidth || 96;
+    hotspot.style.left = `${targetX - hotspotW / 2}px`;
     hotspot.style.top = `${targetY - pointCenterY}px`;
   };
 
